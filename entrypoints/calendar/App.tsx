@@ -16,23 +16,28 @@ export default function App() {
 
   return (
     <div className="container">
-      <div style={{ flexShrink: 0 }}>
-        <h1>
+      <div style={{ flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: 6, margin: "0 45px 10px 45px" }}>
+        <h1 style={{ display: 'inline-block', marginRight: 12 }}>
           <FormattedMessage id="calendar.title" />
         </h1>
-        <label htmlFor="year-input">
-          <FormattedMessage id="calendar.year.label" />
-          {': '}
-        </label>
-        <input
-          id="year-input"
-          type="number"
-          value={year}
-          onChange={(e) => {
-            const y = parseInt(e.target.value);
-            if (!isNaN(y)) setYear(y);
-          }}
-        />
+        <div>
+          <label htmlFor="year-input">
+            <FormattedMessage id="calendar.year.label" />
+            {': '}
+          </label>
+          <input
+            id="year-input"
+            type="number"
+            min={1970}
+            max={new Date().getFullYear()}
+            step={1}
+            value={year}
+            onChange={(e) => {
+              const y = parseInt(e.target.value);
+              if (!isNaN(y)) setYear(y);
+            }}
+          />
+        </div>
       </div>
 
       <div style={{ flex: 1, minHeight: 0, textAlign: 'left' }}>
@@ -50,7 +55,7 @@ export default function App() {
                 active ? 'blue' : CalendarUtil.isToday(date) ? 'lightblue' : 'inhert'
               }
               showMonthAtFirstOfMonth={true}
-              onClick={() => {}}
+              onClick={() => { }}
             />
           )}
           datesWrapper={(children, ref) => (
