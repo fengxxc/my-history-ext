@@ -18,7 +18,6 @@ const es = {
   // Calendario
   'calendar.title': 'Calendario',
   'calendar.year.label': 'Año',
-  'calendar.weekdays': 'Dom,Lun,Mar,Mié,Jue,Vie,Sáb',
 
   // Configuración
   'app.openOptions': 'Configuración',

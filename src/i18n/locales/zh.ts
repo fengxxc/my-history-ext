@@ -1,5 +1,5 @@
 /**
- * 中文消息
+ * 简体中文消息
  */
 const zh = {
   // Popup – 标题栏
@@ -18,7 +18,6 @@ const zh = {
   // 日历
   'calendar.title': '日历',
   'calendar.year.label': '年份',
-  'calendar.weekdays': '日,一,二,三,四,五,六',
 
   // 设置
   'app.openOptions': '设置',

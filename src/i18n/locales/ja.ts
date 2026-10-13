@@ -18,7 +18,6 @@ const ja = {
   // カレンダー
   'calendar.title': 'カレンダー',
   'calendar.year.label': '年',
-  'calendar.weekdays': '日,月,火,水,木,金,土',
 
   // 設定
   'app.openOptions': '設定',

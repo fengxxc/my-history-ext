@@ -4,19 +4,16 @@ import FreeCalendar, {
   CalendarUtil,
   type WheelTypeType,
 } from 'react-free-calendar';
-import { FormattedMessage, useIntl } from '@/src/i18n';
+import { FormattedDate, FormattedMessage, useIntl } from '@/src/i18n';
 
 export default function App() {
   const intl = useIntl();
 
   const [year, setYear] = React.useState(new Date().getFullYear());
 
-  // "日,一,二,三,四,五,六"  or  "Sun,Mon,Tue,Wed,Thu,Fri,Sat"
-  const weekdays = intl.formatMessage({ id: 'calendar.weekdays' }).split(',');
-
   return (
     <div className="container">
-      <div style={{ flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: 6, margin: "0 45px 10px 45px" }}>
+      <div style={{ flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: 6, margin: "5px 15px 10px 60px" }}>
         <h1 style={{ display: 'inline-block', marginRight: 12 }}>
           <FormattedMessage id="calendar.title" />
         </h1>
@@ -63,7 +60,8 @@ export default function App() {
               {children}
             </div>
           )}
-          weekNameFormat={(d: Date) => weekdays[d.getDay()] ?? ''}
+          weekNameFormat={(d: Date) => <FormattedDate value={d} weekday="short" />}
+          monthTagNameFormat={(d: Date) => <FormattedDate value={d} month="short" />}
         />
       </div>
     </div>

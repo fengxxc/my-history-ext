@@ -18,7 +18,6 @@ const ko = {
   // 달력
   'calendar.title': '달력',
   'calendar.year.label': '연도',
-  'calendar.weekdays': '일,월,화,수,목,금,토',
 
   // 설정
   'app.openOptions': '설정',

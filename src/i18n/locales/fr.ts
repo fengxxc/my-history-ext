@@ -18,7 +18,6 @@ const fr = {
   // Calendrier
   'calendar.title': 'Calendrier',
   'calendar.year.label': 'Année',
-  'calendar.weekdays': 'Dim,Lun,Mar,Mer,Jeu,Ven,Sam',
 
   // Paramètres
   'app.openOptions': 'Paramètres',

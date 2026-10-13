@@ -18,7 +18,6 @@ const zhTW = {
   // 日曆
   'calendar.title': '日曆',
   'calendar.year.label': '年份',
-  'calendar.weekdays': '日,一,二,三,四,五,六',
 
   // 設定
   'app.openOptions': '設定',

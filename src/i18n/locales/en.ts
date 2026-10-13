@@ -18,7 +18,6 @@ const en = {
   // Calendar
   'calendar.title': 'Calendar',
   'calendar.year.label': 'Year',
-  'calendar.weekdays': 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
 
   // Options
   'app.openOptions': 'Settings',
