@@ -13,6 +13,7 @@ export default function App() {
   const colorOnPrimary = useCSSVariable('--color-on-primary');
 
   const [year, setYear] = React.useState(new Date().getFullYear());
+  const [toDate, setToDate] = React.useState(new Date());
 
   return (
     <div className="calendar-container">
@@ -20,7 +21,7 @@ export default function App() {
         <h1 className="calendar-toolbar__title">
           <FormattedMessage id="calendar.title" />
         </h1>
-        <div className="calendar-toolbar__year-control">
+        <div className="calendar-toolbar__control">
           <label htmlFor="year-input">
             <FormattedMessage id="calendar.year.label" />
             {': '}
@@ -38,6 +39,15 @@ export default function App() {
             }}
             className="calendar-toolbar__year-input"
           />
+        </div>
+        <div className="calendar-toolbar__control">
+          <button className= "btn btn--default" onClick={() => {
+            const today = new Date();
+            setYear(today.getFullYear());
+            setToDate(today);
+          }}>
+            <FormattedMessage id="calendar.today.button" />
+          </button>
         </div>
       </div>
 
@@ -59,6 +69,7 @@ export default function App() {
               onClick={() => {}}
             />
           )}
+          fixed={{ date: toDate, smooth: false }}
           datesWrapper={(children, ref) => (
             <div ref={ref} className="scrollbar">
               {children}

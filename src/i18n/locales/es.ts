@@ -18,6 +18,7 @@ const es = {
   // Calendario
   'calendar.title': 'Calendario',
   'calendar.year.label': 'Año',
+  'calendar.today.button': 'Hoy',
 
   // Configuración
   'app.openOptions': 'Configuración',

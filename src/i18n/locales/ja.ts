@@ -18,6 +18,7 @@ const ja = {
   // カレンダー
   'calendar.title': 'カレンダー',
   'calendar.year.label': '年',
+  'calendar.today.button': '今日',
 
   // 設定
   'app.openOptions': '設定',

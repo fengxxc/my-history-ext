@@ -18,6 +18,7 @@ const ko = {
   // 달력
   'calendar.title': '달력',
   'calendar.year.label': '연도',
+  'calendar.today.button': '오늘',
 
   // 설정
   'app.openOptions': '설정',

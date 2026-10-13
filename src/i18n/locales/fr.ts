@@ -18,6 +18,7 @@ const fr = {
   // Calendrier
   'calendar.title': 'Calendrier',
   'calendar.year.label': 'Année',
+  'calendar.today.button': 'Aujourd\'hui',
 
   // Paramètres
   'app.openOptions': 'Paramètres',

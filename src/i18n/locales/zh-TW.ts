@@ -18,6 +18,7 @@ const zhTW = {
   // 日曆
   'calendar.title': '日曆',
   'calendar.year.label': '年份',
+  'calendar.today.button': '今天',
 
   // 設定
   'app.openOptions': '設定',

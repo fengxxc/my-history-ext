@@ -39,6 +39,7 @@
 
 /* ── Buttons ─────────────────────────────────────────────────────────────────
    .btn                 — base (required)
+   .btn--default         — outline primary; use on light backgrounds
    .btn--primary        — filled primary; use on light backgrounds
    .btn--ghost-white    — transparent with white border/text; use on primary bg
    .btn--ghost-white-sm — compact ghost; for icon-only or very short labels
@@ -56,12 +57,25 @@
   cursor: pointer;
   white-space: nowrap;
   border: 1px solid transparent;
+  background: transparent;
   transition:
     background var(--transition-base),
     border-color var(--transition-base),
     box-shadow var(--transition-base);
   text-decoration: none; /* safe if used on <a> */
   line-height: 1;
+}
+
+/* Outline / default */
+.btn--default {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn--default:hover {
+  background: var(--color-primary-light);
+  color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
 }
 
 /* Filled / primary */
