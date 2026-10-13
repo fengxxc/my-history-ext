@@ -3,7 +3,6 @@ import {
   FormattedMessage,
   useIntl,
   SUPPORTED_LOCALES,
-  LOCALE_STORAGE_KEY,
   getStoredLocaleSetting,
   setStoredLocaleSetting,
   detectLocale,
@@ -96,10 +95,10 @@ export default function App() {
 
   return (
     <div className="options-page">
-      <header className="options-header">
-        <span className="options-header__icon">📜</span>
-        <h1 className="options-header__title">My History</h1>
-        <span className="options-header__subtitle">
+      <header className="page-header options-header">
+        <span className="page-header__icon">📜</span>
+        <h1 className="page-header__title">My History</h1>
+        <span className="page-header__subtitle">
           <FormattedMessage id="options.title" />
         </span>
       </header>

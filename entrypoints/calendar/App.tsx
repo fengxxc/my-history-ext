@@ -12,12 +12,12 @@ export default function App() {
   const [year, setYear] = React.useState(new Date().getFullYear());
 
   return (
-    <div className="container">
-      <div style={{ flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: 6, margin: "5px 15px 10px 60px" }}>
-        <h1 style={{ display: 'inline-block', marginRight: 12 }}>
+    <div className="calendar-container">
+      <div className="calendar-toolbar">
+        <h1 className="calendar-toolbar__title">
           <FormattedMessage id="calendar.title" />
         </h1>
-        <div>
+        <div className="calendar-toolbar__year-control">
           <label htmlFor="year-input">
             <FormattedMessage id="calendar.year.label" />
             {': '}
@@ -33,11 +33,12 @@ export default function App() {
               const y = parseInt(e.target.value);
               if (!isNaN(y)) setYear(y);
             }}
+            className="calendar-toolbar__year-input"
           />
         </div>
       </div>
 
-      <div style={{ flex: 1, minHeight: 0, textAlign: 'left' }}>
+      <div className="calendar-body">
         <FreeCalendar
           wheelType={'native' as WheelTypeType}
           id={'test-free-calendar'}
@@ -49,10 +50,10 @@ export default function App() {
               date={date}
               color={active || CalendarUtil.isToday(date) ? 'white' : 'inherit'}
               backgroundColor={
-                active ? 'blue' : CalendarUtil.isToday(date) ? 'lightblue' : 'inhert'
+                active ? 'blue' : CalendarUtil.isToday(date) ? 'lightblue' : 'inherit'
               }
               showMonthAtFirstOfMonth={true}
-              onClick={() => { }}
+              onClick={() => {}}
             />
           )}
           datesWrapper={(children, ref) => (

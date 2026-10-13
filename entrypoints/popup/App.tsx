@@ -47,19 +47,22 @@ export default function App() {
   };
 
   return (
-    <div className="container">
-      <header className="header">
-        <h1>📜 <FormattedMessage id="app.title" /></h1>
-        <div style={{ display: 'flex', gap: 6 }}>
+    <div className="popup-container">
+      <header className="page-header popup-header">
+        <h1 className="popup-header__title">
+          📜 <FormattedMessage id="app.title" />
+        </h1>
+        <div className="popup-header__actions">
           <button
-            className="calendar-btn"
+            className="btn btn--ghost-white btn--sm"
             onClick={() => browser.tabs.create({ url: browser.runtime.getURL('/calendar.html') })}
           >
             📅 <FormattedMessage id="app.openCalendar" />
           </button>
           <button
-            className="option-btn"
+            className="btn btn--icon-ghost btn--sm"
             onClick={() => browser.runtime.openOptionsPage()}
+            title={intl.formatMessage({ id: 'app.openOptions' })}
           >
             ⚙️ <FormattedMessage id="app.openOptions" />
           </button>
@@ -72,20 +75,20 @@ export default function App() {
           placeholder={intl.formatMessage({ id: 'search.placeholder' })}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          className="search-input"
+          className="input"
         />
-        <button type="submit" className="search-btn">
+        <button type="submit" className="btn btn--primary">
           <FormattedMessage id="search.button" />
         </button>
       </form>
 
-      <main className="content">
+      <main className="history-content">
         {loading ? (
-          <div className="loading">
+          <div className="status-placeholder">
             <FormattedMessage id="status.loading" />
           </div>
         ) : historyItems.length === 0 ? (
-          <div className="empty">
+          <div className="status-placeholder">
             <FormattedMessage id="status.empty" />
           </div>
         ) : (

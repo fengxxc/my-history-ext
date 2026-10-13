@@ -1,107 +1,88 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@import '@/src/styles/tokens.css';
+@import '@/src/styles/base.css';
+@import '@/src/styles/shared.css';
+
+/* ── Options page shell ──────────────────────────────────────────────────────*/
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 14px;
-  background: #f5f5f5;
-  color: #333;
   min-width: 580px;
 }
 
-/* ── Header ─────────────────────────────────────────────────────────────────── */
+/* ── Header ──────────────────────────────────────────────────────────────────
+   Options header uses larger padding than the popup variant.
+────────────────────────────────────────────────────────────────────────────── */
 
 .options-header {
-  background: #1a73e8;
-  color: white;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  padding: var(--space-4) var(--space-6);
+  gap: var(--space-3);
 }
 
-.options-header__icon {
-  font-size: 22px;
-  line-height: 1;
-}
-
-.options-header__title {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.options-header__subtitle {
-  font-size: 13px;
-  opacity: 0.8;
-  margin-left: 4px;
-}
-
-/* ── Main layout ─────────────────────────────────────────────────────────────── */
+/* ── Main layout ─────────────────────────────────────────────────────────────*/
 
 .options-main {
   max-width: 640px;
   margin: 0 auto;
-  padding: 28px 24px;
+  padding: var(--space-7) var(--space-6);
 }
 
-/* ── Section ─────────────────────────────────────────────────────────────────── */
+/* ── Section card ────────────────────────────────────────────────────────────*/
 
 .options-section {
-  background: white;
-  border-radius: 10px;
-  padding: 20px 20px 24px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-sm);
 }
 
 .options-section__heading {
-  font-size: 14px;
-  font-weight: 600;
-  color: #555;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
-/* ── Language grid ───────────────────────────────────────────────────────────── */
+/* ── Language grid ───────────────────────────────────────────────────────────*/
 
 .lang-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 10px;
+  gap: var(--space-3);
 }
 
-/* ── Language card ───────────────────────────────────────────────────────────── */
+/* ── Language card ───────────────────────────────────────────────────────────*/
 
 .lang-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 8px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
   position: relative;
   user-select: none;
-  background: #fafafa;
+  background: var(--color-surface-raised);
 }
 
 .lang-card:hover {
-  border-color: #1a73e8;
-  background: #f0f6ff;
-  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.12);
+  border-color: var(--color-primary);
+  background: var(--color-primary-hover-bg);
+  box-shadow: var(--shadow-ring-sm);
 }
 
 .lang-card--selected {
-  border-color: #1a73e8;
-  background: #e8f0fe;
-  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  box-shadow: var(--shadow-ring);
 }
 
-/* Hide the native radio button; the card itself acts as the control */
+/* Hide the native radio; the card itself is the control */
 .lang-card__radio {
   position: absolute;
   opacity: 0;
@@ -110,7 +91,7 @@ body {
 }
 
 .lang-card__flag {
-  font-size: 22px;
+  font-size: var(--font-size-xl);
   line-height: 1;
   flex-shrink: 0;
 }
@@ -123,17 +104,17 @@ body {
 }
 
 .lang-card__native {
-  font-size: 13px;
-  font-weight: 600;
-  color: #222;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .lang-card__sub {
-  font-size: 11px;
-  color: #888;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -142,18 +123,18 @@ body {
 .lang-card__check {
   margin-left: auto;
   flex-shrink: 0;
-  font-size: 14px;
-  color: #1a73e8;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
 }
 
-/* ── Saved toast ─────────────────────────────────────────────────────────────── */
+/* ── Saved toast ─────────────────────────────────────────────────────────────*/
 
 .saved-toast {
   display: inline-block;
-  margin-top: 16px;
-  font-size: 13px;
-  color: #2e7d32;
-  font-weight: 500;
-  transition: opacity 0.4s ease;
+  margin-top: var(--space-4);
+  font-size: var(--font-size-base);
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+  transition: opacity var(--transition-slow);
 }

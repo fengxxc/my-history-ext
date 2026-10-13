@@ -1,0 +1,162 @@
+/**
+ * Shared Components
+ * Reusable class-based utilities consumed by every entrypoint.
+ * Rules here must be generic enough to work across popup, options, and calendar.
+ */
+
+/* ── Page header ─────────────────────────────────────────────────────────────
+   A full-width primary-colored header strip used on every page.
+   Compose child elements freely; the header itself only dictates layout and
+   color — not content.
+────────────────────────────────────────────────────────────────────────────── */
+
+.page-header {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.page-header__icon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.page-header__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.page-header__subtitle {
+  font-size: var(--font-size-sm);
+  opacity: 0.80;
+}
+
+
+/* ── Buttons ─────────────────────────────────────────────────────────────────
+   .btn                 — base (required)
+   .btn--primary        — filled primary; use on light backgrounds
+   .btn--ghost-white    — transparent with white border/text; use on primary bg
+   .btn--ghost-white-sm — compact ghost; for icon-only or very short labels
+────────────────────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+  text-decoration: none; /* safe if used on <a> */
+  line-height: 1;
+}
+
+/* Filled / primary */
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: transparent;
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Ghost on a primary/colored background */
+.btn--ghost-white {
+  background: var(--color-on-primary-ghost);
+  color: var(--color-on-primary);
+  border-color: var(--color-on-primary-subtle);
+}
+
+.btn--ghost-white:hover {
+  background: var(--color-on-primary-ghost-hover);
+}
+
+/* Ghost icon button — no border, smaller padding */
+.btn--icon-ghost {
+  background: transparent;
+  color: var(--color-on-primary);
+  border-color: transparent;
+  padding: 6px var(--space-2);
+}
+
+.btn--icon-ghost:hover {
+  background: var(--color-on-primary-ghost);
+}
+
+/* Compact size modifier (for header toolbar buttons) */
+.btn--sm {
+  font-size: var(--font-size-sm);
+  padding: var(--space-1) var(--space-2);
+}
+
+
+/* ── Text input ──────────────────────────────────────────────────────────────
+   Standard single-line text field.
+────────────────────────────────────────────────────────────────────────────── */
+
+.input {
+  width: 100%;
+  padding: 6px var(--space-2) 6px var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  color: var(--color-text-body);
+  background: var(--color-surface);
+  outline: none;
+  transition: border-color var(--transition-base);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────────
+   Thin, neutral scrollbar for any scrollable container.
+   Apply .scrollbar to the element that has overflow:auto/scroll.
+────────────────────────────────────────────────────────────────────────────── */
+
+.scrollbar {
+  overflow: auto;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.5rem;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-scrollbar-thumb);
+  border-radius: 0.2rem;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+/* ── Status placeholders ─────────────────────────────────────────────────────
+   Centered informational text for empty / loading states.
+────────────────────────────────────────────────────────────────────────────── */
+
+.status-placeholder {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-8) var(--space-4);
+}
