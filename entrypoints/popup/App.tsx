@@ -50,12 +50,20 @@ export default function App() {
     <div className="container">
       <header className="header">
         <h1>📜 <FormattedMessage id="app.title" /></h1>
-        <button
-          className="calendar-btn"
-          onClick={() => browser.tabs.create({ url: browser.runtime.getURL('/calendar.html') })}
-        >
-          📅 <FormattedMessage id="app.openCalendar" />
-        </button>
+        <div style={{ display: 'flex', gap: 6 }}>
+          <button
+            className="calendar-btn"
+            onClick={() => browser.tabs.create({ url: browser.runtime.getURL('/calendar.html') })}
+          >
+            📅 <FormattedMessage id="app.openCalendar" />
+          </button>
+          <button
+            className="option-btn"
+            onClick={() => browser.runtime.openOptionsPage()}
+          >
+            ⚙️ <FormattedMessage id="app.openOptions" />
+          </button>
+        </div>
       </header>
 
       <form onSubmit={handleSearch} className="search-form">

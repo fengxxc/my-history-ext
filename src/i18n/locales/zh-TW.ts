@@ -19,6 +19,13 @@ const zhTW = {
   'calendar.title': '日曆',
   'calendar.year.label': '年份',
   'calendar.weekdays': '日,一,二,三,四,五,六',
+
+  // 設定
+  'app.openOptions': '設定',
+  'options.title': '設定',
+  'options.language.heading': '顯示語言',
+  'options.language.auto': '自動（跟隨瀏覽器）',
+  'options.language.saved': '已儲存！',
 } as const;
 
 export default zhTW;

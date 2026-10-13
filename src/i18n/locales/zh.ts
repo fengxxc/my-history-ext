@@ -19,6 +19,13 @@ const zh = {
   'calendar.title': '日历',
   'calendar.year.label': '年份',
   'calendar.weekdays': '日,一,二,三,四,五,六',
+
+  // 设置
+  'app.openOptions': '设置',
+  'options.title': '设置',
+  'options.language.heading': '显示语言',
+  'options.language.auto': '自动（跟随浏览器）',
+  'options.language.saved': '已保存！',
 } as const;
 
 export default zh;

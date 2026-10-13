@@ -1,0 +1,159 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  background: #f5f5f5;
+  color: #333;
+  min-width: 580px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+
+.options-header {
+  background: #1a73e8;
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.options-header__icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.options-header__title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.options-header__subtitle {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* ── Main layout ─────────────────────────────────────────────────────────────── */
+
+.options-main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────────────── */
+
+.options-section {
+  background: white;
+  border-radius: 10px;
+  padding: 20px 20px 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.options-section__heading {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+
+/* ── Language grid ───────────────────────────────────────────────────────────── */
+
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+/* ── Language card ───────────────────────────────────────────────────────────── */
+
+.lang-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  position: relative;
+  user-select: none;
+  background: #fafafa;
+}
+
+.lang-card:hover {
+  border-color: #1a73e8;
+  background: #f0f6ff;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.12);
+}
+
+.lang-card--selected {
+  border-color: #1a73e8;
+  background: #e8f0fe;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+/* Hide the native radio button; the card itself acts as the control */
+.lang-card__radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.lang-card__flag {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.lang-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.lang-card__native {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lang-card__sub {
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lang-card__check {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: #1a73e8;
+  font-weight: 700;
+}
+
+/* ── Saved toast ─────────────────────────────────────────────────────────────── */
+
+.saved-toast {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #2e7d32;
+  font-weight: 500;
+  transition: opacity 0.4s ease;
+}

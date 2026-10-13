@@ -55,6 +55,22 @@ body {
   background: rgba(255, 255, 255, 0.35);
 }
 
+.option-btn {
+  padding: 4px 8px;
+  background: transparent;
+  color: white;
+  border: none;
+  /* border-radius: 4px; */
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.option-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .search-form {
   display: flex;
   gap: 8px;

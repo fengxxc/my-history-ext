@@ -19,6 +19,13 @@ const es = {
   'calendar.title': 'Calendario',
   'calendar.year.label': 'Año',
   'calendar.weekdays': 'Dom,Lun,Mar,Mié,Jue,Vie,Sáb',
+
+  // Configuración
+  'app.openOptions': 'Configuración',
+  'options.title': 'Configuración',
+  'options.language.heading': 'Idioma de visualización',
+  'options.language.auto': 'Automático (idioma del navegador)',
+  'options.language.saved': '¡Guardado!',
 } as const;
 
 export default es;

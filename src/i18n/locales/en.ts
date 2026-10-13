@@ -19,6 +19,13 @@ const en = {
   'calendar.title': 'Calendar',
   'calendar.year.label': 'Year',
   'calendar.weekdays': 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
+
+  // Options
+  'app.openOptions': 'Settings',
+  'options.title': 'Settings',
+  'options.language.heading': 'Display Language',
+  'options.language.auto': 'Auto (follow browser)',
+  'options.language.saved': 'Saved!',
 } as const;
 
 export type MessageKey = keyof typeof en;

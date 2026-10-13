@@ -8,5 +8,9 @@ export default defineConfig({
     description: 'A browser history extension',
     version: '0.0.1',
     permissions: ['history', 'storage', 'tabs'],
+    options_ui: {
+      page: 'options.html',
+      open_in_tab: true,
+    },
   },
 });

@@ -19,6 +19,13 @@ const ja = {
   'calendar.title': 'カレンダー',
   'calendar.year.label': '年',
   'calendar.weekdays': '日,月,火,水,木,金,土',
+
+  // 設定
+  'app.openOptions': '設定',
+  'options.title': '設定',
+  'options.language.heading': '表示言語',
+  'options.language.auto': '自動（ブラウザに従う）',
+  'options.language.saved': '保存しました！',
 } as const;
 
 export default ja;

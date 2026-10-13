@@ -19,6 +19,13 @@ const ko = {
   'calendar.title': '달력',
   'calendar.year.label': '연도',
   'calendar.weekdays': '일,월,화,수,목,금,토',
+
+  // 설정
+  'app.openOptions': '설정',
+  'options.title': '설정',
+  'options.language.heading': '표시 언어',
+  'options.language.auto': '자동 (브라우저 언어 사용)',
+  'options.language.saved': '저장되었습니다!',
 } as const;
 
 export default ko;
