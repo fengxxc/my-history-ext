@@ -144,6 +144,45 @@ export function useTheme(): [ThemeSetting, (s: ThemeSetting) => Promise<void>] {
   return [setting, set];
 }
 
+// ─── CSS Variable hook ───────────────────────────────────────────────────────
+
+/**
+ * Reactively reads a CSS custom property from `:root`.
+ * Automatically re-renders when `data-theme` changes or the system
+ * switches between light / dark mode.
+ *
+ * @example
+ * const primary = useCSSVariable('--color-primary'); // e.g. "#1a73e8"
+ */
+export function useCSSVariable(variable: string): string {
+  const get = () =>
+    getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
+
+  const [value, setValue] = useState(get);
+
+  useEffect(() => {
+    const update = () => setValue(get());
+
+    // Re-read when data-theme attribute changes (manual theme switch)
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
+    // Re-read when the OS switches between light / dark mode
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', update);
+
+    return () => {
+      observer.disconnect();
+      mq.removeEventListener('change', update);
+    };
+  }, [variable]);
+
+  return value;
+}
+
 // ─── ThemeProvider ──────────────────────────────────────────────────────────────────────────────
 
 /**

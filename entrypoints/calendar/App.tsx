@@ -5,9 +5,12 @@ import FreeCalendar, {
   type WheelTypeType,
 } from 'react-free-calendar';
 import { FormattedDate, FormattedMessage, useIntl } from '@/src/i18n';
+import { useCSSVariable } from '@/src/theme';
 
 export default function App() {
   const intl = useIntl();
+  const colorPrimary = useCSSVariable('--color-primary');
+  const colorOnPrimary = useCSSVariable('--color-on-primary');
 
   const [year, setYear] = React.useState(new Date().getFullYear());
 
@@ -48,9 +51,9 @@ export default function App() {
           DateContent={({ date, active }) => (
             <SimpleOneDayContent
               date={date}
-              color={active || CalendarUtil.isToday(date) ? 'white' : 'inherit'}
+              color={active || CalendarUtil.isToday(date) ? colorOnPrimary : 'inherit'}
               backgroundColor={
-                active ? 'blue' : CalendarUtil.isToday(date) ? 'lightblue' : 'inherit'
+                active ? colorPrimary : CalendarUtil.isToday(date) ? colorPrimary : 'inherit'
               }
               showMonthAtFirstOfMonth={true}
               onClick={() => {}}
@@ -63,6 +66,8 @@ export default function App() {
           )}
           weekNameFormat={(d: Date) => <FormattedDate value={d} weekday="short" />}
           monthTagNameFormat={(d: Date) => <FormattedDate value={d} month="short" />}
+          monthTagsWrapper={(children) => <nav className="calendar-month-tags">{children}</nav>}
+          monthTagActiveColor={colorPrimary}
         />
       </div>
     </div>
