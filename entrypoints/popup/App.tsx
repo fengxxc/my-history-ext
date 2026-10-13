@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from '@/src/i18n';
 
 interface HistoryItem {
   id: string;
@@ -9,6 +10,8 @@ interface HistoryItem {
 }
 
 export default function App() {
+  const intl = useIntl();
+
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
@@ -39,38 +42,44 @@ export default function App() {
   };
 
   const formatDate = (timestamp?: number) => {
-    if (!timestamp) return 'Unknown';
-    return new Date(timestamp).toLocaleString();
+    if (!timestamp) return intl.formatMessage({ id: 'history.unknownTime' });
+    return new Date(timestamp).toLocaleString(intl.locale);
   };
 
   return (
     <div className="container">
       <header className="header">
-        <h1>📜 My History</h1>
+        <h1>📜 <FormattedMessage id="app.title" /></h1>
         <button
           className="calendar-btn"
           onClick={() => browser.tabs.create({ url: browser.runtime.getURL('/calendar.html') })}
         >
-          📅 Calendar
+          📅 <FormattedMessage id="app.openCalendar" />
         </button>
       </header>
 
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
-          placeholder="Search history..."
+          placeholder={intl.formatMessage({ id: 'search.placeholder' })}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           className="search-input"
         />
-        <button type="submit" className="search-btn">Search</button>
+        <button type="submit" className="search-btn">
+          <FormattedMessage id="search.button" />
+        </button>
       </form>
 
       <main className="content">
         {loading ? (
-          <div className="loading">Loading...</div>
+          <div className="loading">
+            <FormattedMessage id="status.loading" />
+          </div>
         ) : historyItems.length === 0 ? (
-          <div className="empty">No history found.</div>
+          <div className="empty">
+            <FormattedMessage id="status.empty" />
+          </div>
         ) : (
           <ul className="history-list">
             {historyItems.map((item) => (

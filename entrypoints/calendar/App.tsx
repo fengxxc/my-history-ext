@@ -3,67 +3,62 @@ import FreeCalendar, {
   SimpleOneDayContent,
   CalendarUtil,
   type WheelTypeType,
-} from "react-free-calendar";
+} from 'react-free-calendar';
+import { FormattedMessage, useIntl } from '@/src/i18n';
 
 export default function App() {
+  const intl = useIntl();
+
   const [year, setYear] = React.useState(new Date().getFullYear());
+
+  // "日,一,二,三,四,五,六"  or  "Sun,Mon,Tue,Wed,Thu,Fri,Sat"
+  const weekdays = intl.formatMessage({ id: 'calendar.weekdays' }).split(',');
+
   return (
     <div className="container">
-      <div style={{ flexShrink: 0  }}>
-        <h1>Calendar</h1>
+      <div style={{ flexShrink: 0 }}>
+        <h1>
+          <FormattedMessage id="calendar.title" />
+        </h1>
+        <label htmlFor="year-input">
+          <FormattedMessage id="calendar.year.label" />
+          {': '}
+        </label>
         <input
+          id="year-input"
           type="number"
           value={year}
           onChange={(e) => {
-            const year = parseInt(e.target.value);
-            if (!isNaN(year)) {
-              setYear(year);
-            }
+            const y = parseInt(e.target.value);
+            if (!isNaN(y)) setYear(y);
           }}
         />
       </div>
-      <div style={{ flex: 1, minHeight: 0, textAlign: "left" }}>
+
+      <div style={{ flex: 1, minHeight: 0, textAlign: 'left' }}>
         <FreeCalendar
-          wheelType={"native" as WheelTypeType}
-          id={"test-free-calendar"}
+          wheelType={'native' as WheelTypeType}
+          id={'test-free-calendar'}
           start={new Date(year, 0, 1)}
-          end={CalendarUtil.getMonthLastDay(
-            new Date(year, 11, 1),
-          )}
+          end={CalendarUtil.getMonthLastDay(new Date(year, 11, 1))}
           mondayIsFirstAtWeek={true}
           DateContent={({ date, active }) => (
             <SimpleOneDayContent
               date={date}
-              color={
-                active || CalendarUtil.isToday(date)
-                  ? "white"
-                  : "inherit"
-              }
+              color={active || CalendarUtil.isToday(date) ? 'white' : 'inherit'}
               backgroundColor={
-                active
-                  ? "blue"
-                  : CalendarUtil.isToday(date)
-                    ? "lightblue"
-                    : "inhert"
+                active ? 'blue' : CalendarUtil.isToday(date) ? 'lightblue' : 'inhert'
               }
               showMonthAtFirstOfMonth={true}
-              onClick={
-                (/* date: Date */) => {
-                  // onClick(date)
-                  // setFixedDate(date)
-                }
-              }
+              onClick={() => {}}
             />
           )}
-          //   headerStyle={{marginRight: "0.4rem"}}
           datesWrapper={(children, ref) => (
             <div ref={ref} className="scrollbar">
               {children}
             </div>
           )}
-          weekNameFormat={(d: Date) =>
-            ["日", "一", "二", "三", "四", "五", "六"][d.getDay()] as string
-          }
+          weekNameFormat={(d: Date) => weekdays[d.getDay()] ?? ''}
         />
       </div>
     </div>
