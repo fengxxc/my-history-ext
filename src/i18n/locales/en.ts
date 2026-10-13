@@ -25,6 +25,15 @@ const en = {
   'options.language.heading': 'Display Language',
   'options.language.auto': 'Auto (follow browser)',
   'options.language.saved': 'Saved!',
+
+  // Options – theme
+  'options.theme.heading': 'Appearance',
+  'options.theme.auto':  'Auto',
+  'options.theme.light': 'Light',
+  'options.theme.dark':  'Dark',
+  'options.theme.auto.sub':  'Follow system',
+  'options.theme.light.sub': 'Always light',
+  'options.theme.dark.sub':  'Always dark',
 } as const;
 
 export type MessageKey = keyof typeof en;

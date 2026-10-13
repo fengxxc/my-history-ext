@@ -24,7 +24,16 @@ const fr = {
   'options.title': 'Paramètres',
   'options.language.heading': 'Langue d’affichage',
   'options.language.auto': 'Automatique (langue du navigateur)',
-  'options.language.saved': 'Enregistré !',
+  'options.language.saved': 'Enregistré !',
+
+  // Paramètres – apparence
+  'options.theme.heading': 'Apparence',
+  'options.theme.auto':  'Automatique',
+  'options.theme.light': 'Clair',
+  'options.theme.dark':  'Sombre',
+  'options.theme.auto.sub':  'Suivre le système',
+  'options.theme.light.sub': 'Toujours clair',
+  'options.theme.dark.sub':  'Toujours sombre',
 } as const;
 
 export default fr;

@@ -25,6 +25,15 @@ const de = {
   'options.language.heading': 'Anzeigesprache',
   'options.language.auto': 'Automatisch (Browsersprache)',
   'options.language.saved': 'Gespeichert!',
+
+  // Einstellungen – Erscheinungsbild
+  'options.theme.heading': 'Erscheinungsbild',
+  'options.theme.auto':  'Automatisch',
+  'options.theme.light': 'Hell',
+  'options.theme.dark':  'Dunkel',
+  'options.theme.auto.sub':  'Systemeinstellung folgen',
+  'options.theme.light.sub': 'Immer hell',
+  'options.theme.dark.sub':  'Immer dunkel',
 } as const;
 
 export default de;

@@ -25,6 +25,15 @@ const zh = {
   'options.language.heading': '显示语言',
   'options.language.auto': '自动（跟随浏览器）',
   'options.language.saved': '已保存！',
+
+  // 设置 – 外观
+  'options.theme.heading': '外观',
+  'options.theme.auto':  '自动',
+  'options.theme.light': '浅色',
+  'options.theme.dark':  '深色',
+  'options.theme.auto.sub':  '跟随系统',
+  'options.theme.light.sub': '始终浅色',
+  'options.theme.dark.sub':  '始终深色',
 } as const;
 
 export default zh;

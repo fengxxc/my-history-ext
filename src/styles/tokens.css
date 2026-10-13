@@ -2,7 +2,16 @@
  * Design Tokens
  * Single source of truth for all visual decisions.
  * All other stylesheets must consume these variables — never hard-code values.
+ *
+ * Theme switching:
+ *   data-theme="auto"  (default) — follows @media (prefers-color-scheme)
+ *   data-theme="light"           — always light
+ *   data-theme="dark"            — always dark
  */
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LIGHT THEME  (defaults — no selector needed)
+ ════════════════════════════════════════════════════════════════════════════ */
 
 :root {
   /* ── Brand colors ──────────────────────────────────────────────────────── */
@@ -95,4 +104,102 @@
   --transition-fast: 0.15s ease;
   --transition-base: 0.20s ease;
   --transition-slow: 0.40s ease;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   DARK THEME
+   Applied when:
+     • data-theme="dark"  (user forced dark)
+     • data-theme="auto" + system prefers dark
+ ════════════════════════════════════════════════════════════════════════════ */
+
+/* Forced dark ──────────────────────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Brand — primary hue unchanged (header stays recognisably on-brand).
+     Interactive blue on dark surfaces uses a lighter shade for contrast. */
+  --color-primary:          #1a73e8;
+  --color-primary-hover:    #1865cc;
+  --color-primary-light:    rgba(26, 115, 232, 0.22);
+  --color-primary-hover-bg: rgba(26, 115, 232, 0.13);
+  --color-primary-ring:     rgba(26, 115, 232, 0.45);
+  --color-primary-ring-sm:  rgba(26, 115, 232, 0.25);
+
+  /* On-primary stays white — header bg is still the same blue */
+  --color-on-primary:            #ffffff;
+  --color-on-primary-muted:      rgba(255, 255, 255, 0.80);
+  --color-on-primary-subtle:     rgba(255, 255, 255, 0.50);
+  --color-on-primary-ghost:      rgba(255, 255, 255, 0.20);
+  --color-on-primary-ghost-hover:rgba(255, 255, 255, 0.35);
+
+  /* Surfaces */
+  --color-bg:             #18181b;
+  --color-surface:        #27272a;
+  --color-surface-raised: #2d2d32;
+  --color-surface-hover:  #3f3f46;
+
+  /* Borders */
+  --color-border:         #3f3f46;
+  --color-border-strong:  #52525b;
+  --color-divider:        #2d2d32;
+
+  /* Text */
+  --color-text:           #f4f4f5;
+  --color-text-body:      #e4e4e7;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted:     #71717a;
+  --color-text-faint:     #52525b;
+  --color-text-link:      #60a5fa;   /* lighter blue; readable on dark surfaces */
+
+  /* Semantic */
+  --color-success:        #4ade80;
+
+  /* Scrollbar */
+  --color-scrollbar-thumb: #52525b;
+
+  /* Shadows — stronger alpha to stay visible on dark backgrounds */
+  --shadow-sm:   0 1px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* Auto dark — system preference ────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    color-scheme: dark;
+
+    --color-primary:          #1a73e8;
+    --color-primary-hover:    #1865cc;
+    --color-primary-light:    rgba(26, 115, 232, 0.22);
+    --color-primary-hover-bg: rgba(26, 115, 232, 0.13);
+    --color-primary-ring:     rgba(26, 115, 232, 0.45);
+    --color-primary-ring-sm:  rgba(26, 115, 232, 0.25);
+
+    --color-on-primary:            #ffffff;
+    --color-on-primary-muted:      rgba(255, 255, 255, 0.80);
+    --color-on-primary-subtle:     rgba(255, 255, 255, 0.50);
+    --color-on-primary-ghost:      rgba(255, 255, 255, 0.20);
+    --color-on-primary-ghost-hover:rgba(255, 255, 255, 0.35);
+
+    --color-bg:             #18181b;
+    --color-surface:        #27272a;
+    --color-surface-raised: #2d2d32;
+    --color-surface-hover:  #3f3f46;
+
+    --color-border:         #3f3f46;
+    --color-border-strong:  #52525b;
+    --color-divider:        #2d2d32;
+
+    --color-text:           #f4f4f5;
+    --color-text-body:      #e4e4e7;
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted:     #71717a;
+    --color-text-faint:     #52525b;
+    --color-text-link:      #60a5fa;
+
+    --color-success:        #4ade80;
+
+    --color-scrollbar-thumb: #52525b;
+
+    --shadow-sm:   0 1px 6px rgba(0, 0, 0, 0.45);
+  }
 }

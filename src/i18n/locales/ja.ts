@@ -25,6 +25,15 @@ const ja = {
   'options.language.heading': '表示言語',
   'options.language.auto': '自動（ブラウザに従う）',
   'options.language.saved': '保存しました！',
+
+  // 設定 – 外観
+  'options.theme.heading': '外観',
+  'options.theme.auto':  '自動',
+  'options.theme.light': 'ライト',
+  'options.theme.dark':  'ダーク',
+  'options.theme.auto.sub':  'システムに従う',
+  'options.theme.light.sub': '常にライト',
+  'options.theme.dark.sub':  '常にダーク',
 } as const;
 
 export default ja;

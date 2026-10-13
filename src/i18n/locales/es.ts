@@ -25,6 +25,15 @@ const es = {
   'options.language.heading': 'Idioma de visualización',
   'options.language.auto': 'Automático (idioma del navegador)',
   'options.language.saved': '¡Guardado!',
+
+  // Configuración – apariencia
+  'options.theme.heading': 'Apariencia',
+  'options.theme.auto':  'Automático',
+  'options.theme.light': 'Claro',
+  'options.theme.dark':  'Oscuro',
+  'options.theme.auto.sub':  'Seguir el sistema',
+  'options.theme.light.sub': 'Siempre claro',
+  'options.theme.dark.sub':  'Siempre oscuro',
 } as const;
 
 export default es;

@@ -25,6 +25,15 @@ const ko = {
   'options.language.heading': '표시 언어',
   'options.language.auto': '자동 (브라우저 언어 사용)',
   'options.language.saved': '저장되었습니다!',
+
+  // 설정 – 외관
+  'options.theme.heading': '외관',
+  'options.theme.auto':  '자동',
+  'options.theme.light': '라이트',
+  'options.theme.dark':  '다크',
+  'options.theme.auto.sub':  '시스템 설정 사용',
+  'options.theme.light.sub': '항상 라이트',
+  'options.theme.dark.sub':  '항상 다크',
 } as const;
 
 export default ko;

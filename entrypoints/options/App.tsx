@@ -8,6 +8,8 @@ import {
   detectLocale,
 } from '@/src/i18n';
 import type { LocaleSetting, SupportedLocale } from '@/src/i18n';
+import { THEME_OPTIONS, useTheme } from '@/src/theme';
+import type { ThemeSetting } from '@/src/theme';
 
 // ─── Saved toast ──────────────────────────────────────────────────────────────
 
@@ -25,48 +27,78 @@ function SavedToast({ visible }: { visible: boolean }) {
   );
 }
 
-// ─── Language card ────────────────────────────────────────────────────────────
+// ─── Generic picker card ──────────────────────────────────────────────────────
+// Used for both language and theme pickers.
 
-interface LangCardProps {
-  value: LocaleSetting;
-  flag: string;
-  nativeName: string;
+interface PickerCardProps {
+  name: string;
+  value: string;
+  icon: string;
+  label: string;
   subLabel: string;
   selected: boolean;
-  onSelect: (v: LocaleSetting) => void;
+  onSelect: (v: string) => void;
 }
 
-function LangCard({ value, flag, nativeName, subLabel, selected, onSelect }: LangCardProps) {
+function PickerCard({ name, value, icon, label, subLabel, selected, onSelect }: PickerCardProps) {
   return (
-    <label className={`lang-card${selected ? ' lang-card--selected' : ''}`}>
+    <label className={`picker-card${selected ? ' picker-card--selected' : ''}`}>
       <input
         type="radio"
-        name="locale"
+        name={name}
         value={value}
         checked={selected}
         onChange={() => onSelect(value)}
-        className="lang-card__radio"
+        className="picker-card__radio"
       />
-      <span className="lang-card__flag">{flag}</span>
-      <span className="lang-card__text">
-        <span className="lang-card__native">{nativeName}</span>
-        <span className="lang-card__sub">{subLabel}</span>
+      <span className="picker-card__icon">{icon}</span>
+      <span className="picker-card__text">
+        <span className="picker-card__label">{label}</span>
+        <span className="picker-card__sub">{subLabel}</span>
       </span>
-      {selected && <span className="lang-card__check">✓</span>}
+      {selected && <span className="picker-card__check">✓</span>}
     </label>
   );
 }
 
-// ─── Main options page ────────────────────────────────────────────────────────
+// ─── Theme section ────────────────────────────────────────────────────────────
 
-export default function App() {
+function ThemeSection() {
+  const intl = useIntl();
+  const [themeSetting, setTheme] = useTheme();
+
+  return (
+    <section className="options-section">
+      <h2 className="options-section__heading">
+        🎨 <FormattedMessage id="options.theme.heading" />
+      </h2>
+      <div className="picker-grid picker-grid--3">
+        {THEME_OPTIONS.map(({ value, icon, labelKey }) => (
+          <PickerCard
+            key={value}
+            name="theme"
+            value={value}
+            icon={icon}
+            label={intl.formatMessage({ id: labelKey as string })}
+            subLabel={intl.formatMessage({ id: `${labelKey}.sub` as string })}
+            selected={themeSetting === value}
+            onSelect={(v) => setTheme(v as ThemeSetting)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── Language section ─────────────────────────────────────────────────────────
+
+function LanguageSection() {
   const intl = useIntl();
 
   const [setting, setSetting] = useState<LocaleSetting>('auto');
   const [toastVisible, setToastVisible] = useState(false);
   const [toastTimer, setToastTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
 
-  // Load persisted setting on mount.
   useEffect(() => {
     getStoredLocaleSetting().then((stored) => {
       setSetting(stored ?? 'auto');
@@ -86,13 +118,48 @@ export default function App() {
     setToastTimer(t);
   };
 
-  // Detected browser locale label, e.g. "日本語" for ja browser.
   const browserLocale: SupportedLocale = detectLocale();
   const browserMeta = SUPPORTED_LOCALES.find((m) => m.locale === browserLocale);
   const autoSubLabel = browserMeta
     ? `${browserMeta.flag} ${browserMeta.nativeName}`
     : browserLocale;
 
+  return (
+    <section className="options-section">
+      <h2 className="options-section__heading">
+        🌐 <FormattedMessage id="options.language.heading" />
+      </h2>
+      <div className="picker-grid">
+        <PickerCard
+          name="locale"
+          value="auto"
+          icon="🌐"
+          label={intl.formatMessage({ id: 'options.language.auto' })}
+          subLabel={autoSubLabel}
+          selected={setting === 'auto'}
+          onSelect={(v) => handleSelect(v as LocaleSetting)}
+        />
+        {SUPPORTED_LOCALES.map((meta) => (
+          <PickerCard
+            key={meta.locale}
+            name="locale"
+            value={meta.locale}
+            icon={meta.flag}
+            label={meta.nativeName}
+            subLabel={meta.englishName}
+            selected={setting === meta.locale}
+            onSelect={(v) => handleSelect(v as LocaleSetting)}
+          />
+        ))}
+      </div>
+      <SavedToast visible={toastVisible} />
+    </section>
+  );
+}
+
+// ─── Main options page ────────────────────────────────────────────────────────
+
+export default function App() {
   return (
     <div className="options-page">
       <header className="page-header options-header">
@@ -104,38 +171,8 @@ export default function App() {
       </header>
 
       <main className="options-main">
-        <section className="options-section">
-          <h2 className="options-section__heading">
-            🌐 <FormattedMessage id="options.language.heading" />
-          </h2>
-
-          <div className="lang-grid">
-            {/* Auto option */}
-            <LangCard
-              value="auto"
-              flag="🌐"
-              nativeName={intl.formatMessage({ id: 'options.language.auto' })}
-              subLabel={autoSubLabel}
-              selected={setting === 'auto'}
-              onSelect={handleSelect}
-            />
-
-            {/* Explicit locale options */}
-            {SUPPORTED_LOCALES.map((meta) => (
-              <LangCard
-                key={meta.locale}
-                value={meta.locale}
-                flag={meta.flag}
-                nativeName={meta.nativeName}
-                subLabel={meta.englishName}
-                selected={setting === meta.locale}
-                onSelect={handleSelect}
-              />
-            ))}
-          </div>
-
-          <SavedToast visible={toastVisible} />
-        </section>
+        <ThemeSection />
+        <LanguageSection />
       </main>
     </div>
   );

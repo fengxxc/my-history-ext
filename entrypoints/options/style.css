@@ -23,6 +23,9 @@ body {
   max-width: 640px;
   margin: 0 auto;
   padding: var(--space-7) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
 /* ── Section card ────────────────────────────────────────────────────────────*/
@@ -43,17 +46,26 @@ body {
   margin-bottom: var(--space-4);
 }
 
-/* ── Language grid ───────────────────────────────────────────────────────────*/
+/* ── Picker grid ─────────────────────────────────────────────────────────────
+   Shared by both the theme picker and the language picker.
+   --3 modifier locks the theme picker to exactly 3 equal columns.
+────────────────────────────────────────────────────────────────────────────── */
 
-.lang-grid {
+.picker-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: var(--space-3);
 }
 
-/* ── Language card ───────────────────────────────────────────────────────────*/
+.picker-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
 
-.lang-card {
+/* ── Picker card ─────────────────────────────────────────────────────────────
+   Generic selectable card.  Used for themes and languages.
+────────────────────────────────────────────────────────────────────────────── */
+
+.picker-card {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -70,40 +82,40 @@ body {
   background: var(--color-surface-raised);
 }
 
-.lang-card:hover {
+.picker-card:hover {
   border-color: var(--color-primary);
   background: var(--color-primary-hover-bg);
   box-shadow: var(--shadow-ring-sm);
 }
 
-.lang-card--selected {
+.picker-card--selected {
   border-color: var(--color-primary);
   background: var(--color-primary-light);
   box-shadow: var(--shadow-ring);
 }
 
-/* Hide the native radio; the card itself is the control */
-.lang-card__radio {
+/* Hide the native radio; the card itself is the accessible control */
+.picker-card__radio {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.lang-card__flag {
+.picker-card__icon {
   font-size: var(--font-size-xl);
   line-height: 1;
   flex-shrink: 0;
 }
 
-.lang-card__text {
+.picker-card__text {
   display: flex;
   flex-direction: column;
   gap: 1px;
   min-width: 0;
 }
 
-.lang-card__native {
+.picker-card__label {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
@@ -112,7 +124,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.lang-card__sub {
+.picker-card__sub {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   white-space: nowrap;
@@ -120,7 +132,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.lang-card__check {
+.picker-card__check {
   margin-left: auto;
   flex-shrink: 0;
   font-size: var(--font-size-md);
