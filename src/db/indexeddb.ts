@@ -216,6 +216,27 @@ export class IndexedDBStore<T = any, K extends IDBValidKey = IDBValidKey> {
     });
   }
 
+  /** 按索引值删除所有匹配记录，返回删除条数 */
+  deleteByIndex(indexName: string, value: IDBValidKey | IDBKeyRange): Promise<number> {
+    return this.withStore('readwrite', (store) => {
+      const request = store.index(indexName).openCursor(value);
+      return new Promise<number>((resolve, reject) => {
+        let deleted = 0;
+        request.onsuccess = () => {
+          const cursor = request.result;
+          if (!cursor) {
+            resolve(deleted);
+            return;
+          }
+          cursor.delete();
+          deleted += 1;
+          cursor.continue();
+        };
+        request.onerror = () => reject(request.error);
+      });
+    });
+  }
+
   /** 清空当前 store */
   clear(): Promise<void> {
     return this.withStore('readwrite', (store) => promisifyRequest(store.clear()));
@@ -252,6 +273,15 @@ export class IndexedDBStore<T = any, K extends IDBValidKey = IDBValidKey> {
   getByIndex(indexName: string, value: IDBValidKey | IDBKeyRange): Promise<T[]> {
     return this.withStore('readonly', (store) =>
       promisifyRequest<T[]>(store.index(indexName).getAll(value)),
+    );
+  }
+
+  /** 按索引获取主键列表 */
+  getAllKeysByIndex(indexName: string, value?: IDBValidKey | IDBKeyRange): Promise<K[]> {
+    return this.withStore('readonly', (store) =>
+      promisifyRequest(
+        store.index(indexName).getAllKeys(value) as unknown as IDBRequest<K[]>,
+      ),
     );
   }
 

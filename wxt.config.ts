@@ -7,7 +7,7 @@ export default defineConfig({
     name: 'My History',
     description: 'A browser history extension',
     version: '0.0.1',
-    permissions: ['history', 'storage', 'tabs'],
+    permissions: ['history', 'storage', 'tabs', 'alarms'],
     options_ui: {
       page: 'options.html',
       open_in_tab: true,
