@@ -31,6 +31,15 @@ export function registerHistoryListeners() {
 export async function handleVisited(item: Browser.history.HistoryItem) {
   if (!item.url) return;
 
+  /* ignore calendar page visits */
+  const calendarUrl = browser.runtime.getURL("/calendar.html");
+  const browserId = browser.runtime.id;
+  // console.log('[history] calendarUrl', calendarUrl, 'browserId', browserId);
+  if (item.url === calendarUrl || item.url.startsWith(`moz-extension://${browserId}/calendar.html`)) {
+    return;
+  }
+
+
   try {
     // onVisited 只给到 lastVisitTime，再调 getVisits 取最后一次访问的明细（visitId / transition）
     const visits = await browser.history.getVisits({ url: item.url }).catch(() => []);
