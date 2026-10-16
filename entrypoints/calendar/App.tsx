@@ -3,17 +3,54 @@ import FreeCalendar, {
   SimpleOneDayContent,
   CalendarUtil,
   type WheelTypeType,
+  type DateContentProps,
 } from 'react-free-calendar';
 import { FormattedDate, FormattedMessage, useIntl } from '@/src/i18n';
 import { useCSSVariable } from '@/src/theme';
+import { joinUrl, listHistories, type HistoryRecord } from '@/src/db';
+
+/** 从 IndexedDB 读取指定时间区间的访问记录 */
+const fetchHistory = async (startTime: number, endTime: number): Promise<HistoryItem[]> => {
+  return listHistories({ start: startTime, end: endTime, limit: Infinity });
+};
 
 export default function App() {
   const intl = useIntl();
   const colorPrimary = useCSSVariable('--color-primary');
   const colorOnPrimary = useCSSVariable('--color-on-primary');
 
-  const [year, setYear] = React.useState(new Date().getFullYear());
-  const [toDate, setToDate] = React.useState(new Date());
+  const [fixedDate, setFixedDate] = useState(() => new Date());
+  const fixedProp = useMemo(() => ({ date: fixedDate, smooth: true }), [fixedDate]);
+
+  const [viewYear, setViewYear] = useState(() => new Date().getFullYear());
+
+  const [viewMonth, setViewMonth] = useState(1);
+  const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    let ignore = false;
+    const startTime = new Date(viewYear, 0, 1).getTime();
+    const endTime = new Date(viewYear + 1, 0, 1).getTime() - 1;
+
+    async function loadHistory() {
+      try {
+        setLoading(true);
+        setError(null);
+        const history = await fetchHistory(startTime, endTime);
+        if (!ignore) setHistoryItems(history);
+      } catch (err: unknown) {
+        console.error('Failed to fetch history:', err);
+        if (!ignore) setError(err instanceof Error ? err : new Error(String(err)));
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    }
+
+    loadHistory();
+    return () => { ignore = true; };
+  }, [viewMonth]);
 
   return (
     <div className="calendar-container">
@@ -32,19 +69,19 @@ export default function App() {
             min={1970}
             max={new Date().getFullYear()}
             step={1}
-            value={year}
+            value={viewYear}
             onChange={(e) => {
               const y = parseInt(e.target.value);
-              if (!isNaN(y)) setYear(y);
+              if (!isNaN(y)) setViewYear(y);
             }}
             className="calendar-toolbar__year-input"
           />
         </div>
         <div className="calendar-toolbar__control">
-          <button className= "btn btn--default" onClick={() => {
+          <button className="btn btn--default" onClick={() => {
             const today = new Date();
-            setYear(today.getFullYear());
-            setToDate(today);
+            setViewYear(today.getFullYear());
+            setFixedDate(today);
           }}>
             <FormattedMessage id="calendar.today.button" />
           </button>
@@ -54,22 +91,31 @@ export default function App() {
       <div className="calendar-body">
         <FreeCalendar
           wheelType={'native' as WheelTypeType}
-          id={'test-free-calendar'}
-          start={new Date(year, 0, 1)}
-          end={CalendarUtil.getMonthLastDay(new Date(year, 11, 1))}
+          id={'my-history-calendar'}
+          start={new Date(viewYear, 0, 1)}
+          end={CalendarUtil.getMonthLastDay(new Date(viewYear, 11, 1))}
           mondayIsFirstAtWeek={true}
           DateContent={({ date, active }) => (
-            <SimpleOneDayContent
+            <MyDateContent
               date={date}
               color={active || CalendarUtil.isToday(date) ? colorOnPrimary : 'inherit'}
               backgroundColor={
                 active ? colorPrimary : CalendarUtil.isToday(date) ? colorPrimary : 'inherit'
               }
               showMonthAtFirstOfMonth={true}
-              onClick={() => {}}
+              onClick={() => { }}
+              datas={historyItems.filter((item) => {
+                if (item.visitTime == null) return false;
+                const itemDate = new Date(item.visitTime);
+                return (
+                  itemDate.getFullYear() === date.getFullYear() &&
+                  itemDate.getMonth() === date.getMonth() &&
+                  itemDate.getDate() === date.getDate()
+                );
+              })}
             />
           )}
-          fixed={{ date: toDate, smooth: false }}
+          fixed={fixedProp}
           datesWrapper={(children, ref) => (
             <div ref={ref} className="scrollbar">
               {children}
@@ -79,7 +125,51 @@ export default function App() {
           monthTagNameFormat={(d: Date) => <FormattedDate value={d} month="short" />}
           monthTagsWrapper={(children) => <nav className="calendar-month-tags">{children}</nav>}
           monthTagActiveColor={colorPrimary}
+          onMonthChange={(_, month) => {
+            setViewMonth(month);
+          }}
         />
+      </div>
+    </div>
+  );
+}
+
+interface HistoryItem extends HistoryRecord {
+  // Add any additional properties specific to your application
+}
+
+interface MyDateContentProps {
+  date: Date;
+  color: string;
+  backgroundColor: string;
+  showMonthAtFirstOfMonth?: boolean;
+  onClick?: (date: Date) => void;
+  datas: HistoryItem[];
+}
+const MyDateContent: React.FC<MyDateContentProps> = ({ date, color, backgroundColor, showMonthAtFirstOfMonth, onClick, datas }) => {
+
+  return (
+    <div className="calendar-date-wrapper">
+      <div
+        className="calendar-date"
+        style={{ backgroundColor, color }}
+        onClick={() => onClick && onClick(date)}
+      >
+        {date.getDate() == 1 && showMonthAtFirstOfMonth && (
+          <>
+            <strong>{date.getMonth() + 1}</strong>
+            <span>/</span>
+          </>
+        )}
+        {date.getDate()}
+      </div>
+
+      <div className="calendar-date-content">
+        {datas.map((item) => (
+          <a key={item.id} href={joinUrl(item)} target="_blank" rel="noopener noreferrer">
+            {item.title}
+          </a>
+        ))}
       </div>
     </div>
   );

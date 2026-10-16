@@ -5,7 +5,7 @@
 /* ── Calendar page shell ─────────────────────────────────────────────────────*/
 
 #root {
-  max-width: 1280px;
+  min-width: 320px;
   margin: 0 auto;
   height: 100%;
 }
@@ -67,4 +67,45 @@
   flex: 1;
   min-height: 0;
   text-align: left;
+}
+
+.calendar-month-tags {
+  flex-shrink: 0;
+}
+
+/* ── Calendar date  ────────────────────────────────────────────────────────────────
+   Each date cell is a flex column with the date number on top and the history
+   items below. The date number is styled as a pill with a background color.
+   The history items are displayed as a list of links.
+────────────────────────────────────────────────────────────────────────────── */
+
+.calendar-date-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-date-wrapper .calendar-date {
+  /* display: inline-block; */
+  align-self: center;
+  margin-bottom: 3px;
+  padding: 0px 1px;
+  border-radius: 0.5rem;
+  min-width: 1.4rem;
+  flex-shrink: 0;
+}
+
+.calendar-date-wrapper .calendar-date-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  padding: 2px 0px;
+  border-radius: var(--radius-sm);
+  min-width: 1.4rem;
 }
