@@ -2,6 +2,8 @@ import { browser, type Browser } from 'wxt/browser';
 import {
   clearHistories,
   createRecord,
+  joinUrl,
+  listHistories,
   removeHistoriesByUrl,
   saveHistories,
   saveHistory,
@@ -68,12 +70,55 @@ export async function handleVisitRemoved(removed: Browser.history.RemovedResult)
       await clearHistories();
       return;
     }
-    for (const url of removed.urls ?? []) {
-      await removeHistoriesByUrl(url);
+
+    if (removed.urls && removed.urls.length > 0) {
+      for (const url of removed.urls) {
+        await removeHistoriesByUrl(url);
+      }
+      return;
     }
+
+    // Chrome / Firefox 共有行为：
+    // 当用户在浏览器自带历史页（chrome://history 或 about:history）删除记录时，
+    // 浏览器内部走的是 C++ ExpireHistoryBetween() 时间范围路径（DeletionInfo::ForRange），
+    // 而非扩展侧的 deleteUrl() 路径（DeletionInfo::ForUrls）。
+    // 前者不枚举具体 URL 列表，导致扩展收到 { allHistory: false, urls: [] }。
+    // 此时无法从事件中得知哪些 URL 被删，需做一次对账。
+    // console.warn('[history] onVisitRemoved: urls 为空且 allHistory=false，触发对账清理（浏览器 UI 时间范围删除路径）');
+    await reconcileWithBrowser();
   } catch (err) {
     console.error('[history] onVisitRemoved 删除失败', err);
   }
+}
+
+/**
+ * 对账：将本地 DB 中浏览器已删除的记录清理掉。
+ * 分批读取 DB 记录，逐一调用 browser.history.getVisits() 确认是否仍存在。
+ */
+async function reconcileWithBrowser() {
+  const PAGE = 500;
+  let offset = 0;
+  let total = 0;
+
+  while (true) {
+    const records = await listHistories({ offset, limit: PAGE });
+    if (records.length === 0) break;
+
+    // 对本批次去重，避免对同一 URL 重复查询
+    const urlSet = new Set(records.map((r) => joinUrl(r)));
+    for (const url of urlSet) {
+      const visits = await browser.history.getVisits({ url }).catch(() => [] as Browser.history.VisitItem[]);
+      if (visits.length === 0) {
+        await removeHistoriesByUrl(url);
+        total++;
+      }
+    }
+
+    if (records.length < PAGE) break;
+    offset += PAGE;
+  }
+
+  // console.log(`[history] 对账完成，共清理 ${total} 条 URL 的记录`);
 }
 
 /** 标题常常晚于 onVisited 才确定，提供一个补写标题的入口 */
