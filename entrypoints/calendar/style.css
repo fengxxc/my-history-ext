@@ -98,7 +98,7 @@
 .calendar-date-wrapper .calendar-date-content {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
@@ -106,6 +106,25 @@
   justify-content: flex-start;
   gap: 2px;
   padding: 2px 0px;
-  border-radius: var(--radius-sm);
   min-width: 1.4rem;
+}
+
+.calendar-date-wrapper .calendar-date-content .url-item {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.calendar-date-wrapper .calendar-date-content .url-item .url-item__time {
+  margin-right: var(--space-1);
+  color: var(--color-text-muted);
+}
+.calendar-date-wrapper .calendar-date-content .url-item .url-item__url {
+  color: var(--color-text);
+  text-decoration: none;
 }

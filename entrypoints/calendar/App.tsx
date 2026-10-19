@@ -165,13 +165,16 @@ const MyDateContent: React.FC<MyDateContentProps> = ({ date, color, backgroundCo
         {date.getDate()}
       </div>
 
-      <div className="calendar-date-content">
+      <ul className="calendar-date-content scrollbar">
         {datas.map((item) => (
-          <a key={item.id} href={joinUrl(item)} target="_blank" rel="noopener noreferrer">
-            {item.title}
-          </a>
+          <li key={item.id} className="url-item">
+            <span className="url-item__time">{new Date(item.visitTime).toLocaleTimeString()}</span>
+            <a href={joinUrl(item)} target="_blank" rel="noopener noreferrer" className="url-item__url" title={item.title}>
+              {item.title || joinUrl(item)}
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
