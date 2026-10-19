@@ -31,8 +31,9 @@ export default function App() {
 
   useEffect(() => {
     let ignore = false;
-    const startTime = new Date(viewYear, 0, 1).getTime();
-    const endTime = new Date(viewYear + 1, 0, 1).getTime() - 1;
+    // 计算当前视图的时间范围（上个月的第一天到下个月的最后一天）
+    const startTime = new Date(viewYear, viewMonth - 1 - 1, 1).getTime();
+    const endTime = new Date(viewYear, viewMonth + 1, 1).getTime() - 1;
 
     async function loadHistory() {
       try {
