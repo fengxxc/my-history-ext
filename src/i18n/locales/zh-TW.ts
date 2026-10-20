@@ -28,9 +28,11 @@ const zhTW = {
   'options.language.saved': '已儲存！',
 
   // 設定 – 日曆
-  'options.viewRows.heading': '日曆行數',
-  'options.viewRows.label': '同時顯示的行數',
-  'options.viewRows.sub': '日曆視埠中顯示的週行數',
+  'options.calendar.heading': '日曆',
+  'options.calendar.label': '同時顯示的行數',
+  'options.calendar.sub': '日曆視埠中顯示的週行數',
+  'options.calendar.weekNumber.label': '顯示週數',
+  'options.calendar.weekNumber.sub': '在日曆中顯示 ISO 週數',
 
   // 設定 – 外觀
   'options.theme.heading': '外觀',

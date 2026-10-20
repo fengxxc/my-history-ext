@@ -28,9 +28,11 @@ const zh = {
   'options.language.saved': '已保存！',
 
   // 设置 – 日历
-  'options.viewRows.heading': '日历行数',
-  'options.viewRows.label': '同时显示的行数',
-  'options.viewRows.sub': '日历视口中显示的周行数',
+  'options.calendar.heading': '日历',
+  'options.calendar.label': '同时显示的行数',
+  'options.calendar.sub': '日历视口中显示的周行数',
+  'options.calendar.weekNumber.label': '显示周数',
+  'options.calendar.weekNumber.sub': '在日历中显示 ISO 周数',
 
   // 设置 – 外观
   'options.theme.heading': '外观',

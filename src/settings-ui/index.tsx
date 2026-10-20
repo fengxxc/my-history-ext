@@ -26,7 +26,7 @@ import {
 import type { LocaleSetting, SupportedLocale } from '@/src/i18n';
 import { THEME_OPTIONS, useTheme } from '@/src/theme';
 import type { ThemeSetting } from '@/src/theme';
-import { useViewRows, VIEW_ROWS_MIN, VIEW_ROWS_MAX } from '@/src/calendar-settings';
+import { useViewRows, VIEW_ROWS_MIN, VIEW_ROWS_MAX, useShowWeekNumber } from '@/src/calendar-settings';
 
 // ─── Saved toast ──────────────────────────────────────────────────────────────
 
@@ -174,6 +174,46 @@ export function LanguagePickerContent() {
   );
 }
 
+// ─── Show-week-number toggle content ───────────────────────────────────────────
+
+export function ShowWeekNumberToggleContent() {
+  const intl = useIntl();
+  const [showWeekNumber, setShowWeekNumber] = useShowWeekNumber();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastTimer, setToastTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = () => {
+    setToastVisible(true);
+    if (toastTimer) clearTimeout(toastTimer);
+    const t = setTimeout(() => setToastVisible(false), 2000);
+    setToastTimer(t);
+  };
+
+  const handleChange = async (next: boolean) => {
+    await setShowWeekNumber(next);
+    showToast();
+  };
+
+  return (
+    <>
+      <label className="week-number-toggle">
+        <input
+          type="checkbox"
+          className="week-number-toggle__input"
+          checked={showWeekNumber}
+          onChange={(e) => handleChange(e.target.checked)}
+          aria-label={intl.formatMessage({ id: 'options.calendar.weekNumber.label' })}
+        />
+        <span className="week-number-toggle__track" />
+        <span className="week-number-toggle__label">
+          <FormattedMessage id="options.calendar.weekNumber.label" />
+        </span>
+      </label>
+      <SavedToast visible={toastVisible} />
+    </>
+  );
+}
+
 // ─── View-rows stepper content ────────────────────────────────────────────────
 
 export function ViewRowsStepperContent() {
@@ -207,7 +247,7 @@ export function ViewRowsStepperContent() {
         </button>
         <span
           className="view-rows-stepper__value"
-          aria-label={intl.formatMessage({ id: 'options.viewRows.label' })}
+          aria-label={intl.formatMessage({ id: 'options.calendar.label' })}
         >
           {viewRows}
         </span>

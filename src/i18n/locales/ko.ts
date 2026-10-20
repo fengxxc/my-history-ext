@@ -28,9 +28,11 @@ const ko = {
   'options.language.saved': '저장되었습니다!',
 
   // 설정 – 달력
-  'options.viewRows.heading': '달력 행 수',
-  'options.viewRows.label': '한 번에 표시할 행 수',
-  'options.viewRows.sub': '달력 화면에 표시할 주 행 수',
+  'options.calendar.heading': '달력',
+  'options.calendar.label': '한 번에 표시할 행 수',
+  'options.calendar.sub': '달력 화면에 표시할 주 행 수',
+  'options.calendar.weekNumber.label': '주 번호 표시',
+  'options.calendar.weekNumber.sub': '달력에 ISO 주 번호를 표시합니다',
 
   // 설정 – 외관
   'options.theme.heading': '외관',

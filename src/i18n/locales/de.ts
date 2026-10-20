@@ -28,9 +28,11 @@ const de = {
   'options.language.saved': 'Gespeichert!',
 
   // Einstellungen – Kalender
-  'options.viewRows.heading': 'Kalenderzeilen',
-  'options.viewRows.label': 'Gleichzeitig angezeigte Zeilen',
-  'options.viewRows.sub': 'Wochenzeilenzahl im Kalender-Viewport',
+  'options.calendar.heading': 'Kalender',
+  'options.calendar.label': 'Gleichzeitig angezeigte Zeilen',
+  'options.calendar.sub': 'Wochenzeilenzahl im Kalender-Viewport',
+  'options.calendar.weekNumber.label': 'Wochennummern anzeigen',
+  'options.calendar.weekNumber.sub': 'ISO-Wochennummern im Kalender anzeigen',
 
   // Einstellungen – Erscheinungsbild
   'options.theme.heading': 'Erscheinungsbild',

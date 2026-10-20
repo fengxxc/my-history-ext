@@ -6,11 +6,12 @@ import FreeCalendar, {
 import { FormattedDate, FormattedMessage, useIntl } from '@/src/i18n';
 import { useCSSVariable } from '@/src/theme';
 import { joinUrl, listHistories, type HistoryRecord } from '@/src/db';
-import { useViewRows } from '@/src/calendar-settings';
+import { useViewRows, useShowWeekNumber } from '@/src/calendar-settings';
 import {
   ThemePickerContent,
   LanguagePickerContent,
   ViewRowsStepperContent,
+  ShowWeekNumberToggleContent,
 } from '@/src/settings-ui';
 import { Icon } from '@/src/components/Icon';
 
@@ -27,6 +28,7 @@ export default function App() {
   const [fixedDate, setFixedDate] = useState(() => new Date());
   const fixedProp = useMemo(() => ({ date: fixedDate, smooth: true }), [fixedDate]);
   const [viewRows] = useViewRows();
+  const [showWeekNumber] = useShowWeekNumber();
 
   const [viewYear, setViewYear] = useState(() => new Date().getFullYear());
   const [viewMonth, setViewMonth] = useState(1);
@@ -131,6 +133,7 @@ export default function App() {
             />
           )}
           fixed={fixedProp}
+          showWeekNumber={showWeekNumber}
           viewRows={viewRows}
           datesWrapper={(children, ref) => (
             <div ref={ref} className="scrollbar">
@@ -169,12 +172,17 @@ const CalendarSettingsPopup: React.FC = () => {
 
       <div className="cal-settings-section">
         <h3 className="cal-settings-popup__heading">
-          <Icon name="calendar" size={18} /> <FormattedMessage id="options.viewRows.heading" />
+          <Icon name="calendar" size={18} /> <FormattedMessage id="options.calendar.heading" />
         </h3>
         <p className="cal-settings-popup__desc">
-          <FormattedMessage id="options.viewRows.sub" />
+          <FormattedMessage id="options.calendar.sub" />
         </p>
         <ViewRowsStepperContent />
+        <hr className="settings-section-divider" />
+        <p className="cal-settings-popup__desc">
+          <FormattedMessage id="options.calendar.weekNumber.sub" />
+        </p>
+        <ShowWeekNumberToggleContent />
       </div>
 
       <div className="cal-settings-divider" />

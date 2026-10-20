@@ -28,9 +28,11 @@ const ja = {
   'options.language.saved': '保存しました！',
 
   // 設定 – カレンダー
-  'options.viewRows.heading': 'カレンダーの行数',
-  'options.viewRows.label': '同時に表示する行数',
-  'options.viewRows.sub': 'カレンダーに表示する週行数',
+  'options.calendar.heading': 'カレンダー',
+  'options.calendar.label': '同時に表示する行数',
+  'options.calendar.sub': 'カレンダーに表示する週行数',
+  'options.calendar.weekNumber.label': '週番号を表示',
+  'options.calendar.weekNumber.sub': 'カレンダーに ISO 週番号を表示する',
 
   // 設定 – 外観
   'options.theme.heading': '外観',

@@ -311,7 +311,7 @@
 
 .saved-toast {
   display: inline-block;
-  margin-top: var(--space-4);
+  margin-top: var(--space-2);
   font-size: var(--font-size-base);
   color: var(--color-success);
   font-weight: var(--font-weight-medium);
@@ -349,4 +349,74 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
   line-height: 1;
+}
+
+/* ── Week-number toggle ────────────────────────────────────────────────────────────
+   Used in both the options page section and the calendar toolbar popup.
+────────────────────────────────────────────────────────────────────────────── */
+
+.week-number-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+  width: fit-content;
+}
+
+.week-number-toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.week-number-toggle__track {
+  position: relative;
+  width: 2.5rem;
+  height: 1.375rem;
+  background: var(--color-border);
+  border-radius: 999px;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+
+.week-number-toggle__track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1rem;
+  height: 1rem;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform var(--transition-fast);
+}
+
+.week-number-toggle__input:checked + .week-number-toggle__track {
+  background: var(--color-primary);
+}
+
+.week-number-toggle__input:checked + .week-number-toggle__track::after {
+  transform: translateX(1.125rem);
+}
+
+.week-number-toggle__input:focus-visible + .week-number-toggle__track {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.week-number-toggle__label {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}
+
+/* divider inside an options section or calendar popup section */
+.settings-section-divider {
+  border: none;
+  border-top: 1px solid var(--color-divider);
+  margin: var(--space-3) 0;
 }

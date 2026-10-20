@@ -28,9 +28,11 @@ const es = {
   'options.language.saved': '¡Guardado!',
 
   // Configuración – calendario
-  'options.viewRows.heading': 'Filas del calendario',
-  'options.viewRows.label': 'Filas visibles a la vez',
-  'options.viewRows.sub': 'Filas de semana mostradas en el calendario',
+  'options.calendar.heading': 'Calendario',
+  'options.calendar.label': 'Filas visibles a la vez',
+  'options.calendar.sub': 'Filas de semana mostradas en el calendario',
+  'options.calendar.weekNumber.label': 'Mostrar números de semana',
+  'options.calendar.weekNumber.sub': 'Mostrar el número de semana ISO en el calendario',
 
   // Configuración – apariencia
   'options.theme.heading': 'Apariencia',

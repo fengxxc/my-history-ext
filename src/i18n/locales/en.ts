@@ -28,9 +28,11 @@ const en = {
   'options.language.saved': 'Saved!',
 
   // Options – calendar
-  'options.viewRows.heading': 'Calendar Rows',
-  'options.viewRows.label': 'Rows visible at once',
-  'options.viewRows.sub': 'Week rows shown in the calendar viewport',
+  'options.calendar.heading': 'Calendar',
+  'options.calendar.label': 'Rows visible at once',
+  'options.calendar.sub': 'Week rows shown in the calendar viewport',
+  'options.calendar.weekNumber.label': 'Show week numbers',
+  'options.calendar.weekNumber.sub': 'Display ISO week number in the calendar',
 
   // Options – theme
   'options.theme.heading': 'Appearance',

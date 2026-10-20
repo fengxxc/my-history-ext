@@ -5,6 +5,7 @@ import {
   ThemePickerContent,
   LanguagePickerContent,
   ViewRowsStepperContent,
+  ShowWeekNumberToggleContent,
 } from '@/src/settings-ui';
 
 // ─── Section wrappers ─────────────────────────────────────────────────────────
@@ -28,12 +29,17 @@ function ViewRowsSection() {
     <section className="options-section">
       <h2 className="options-section__heading">
         <Icon name="calendar" size={18} />
-        <FormattedMessage id="options.viewRows.heading" />
+        <FormattedMessage id="options.calendar.heading" />
       </h2>
       <p className="options-section__desc">
-        <FormattedMessage id="options.viewRows.sub" />
+        <FormattedMessage id="options.calendar.sub" />
       </p>
       <ViewRowsStepperContent />
+      <hr className="settings-section-divider" />
+      <p className="options-section__desc">
+        <FormattedMessage id="options.calendar.weekNumber.sub" />
+      </p>
+      <ShowWeekNumberToggleContent />
     </section>
   );
 }

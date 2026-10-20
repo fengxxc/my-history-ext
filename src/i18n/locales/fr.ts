@@ -28,9 +28,11 @@ const fr = {
   'options.language.saved': 'Enregistré !',
 
   // Paramètres – calendrier
-  'options.viewRows.heading': 'Lignes du calendrier',
-  'options.viewRows.label': 'Lignes visibles à la fois',
-  'options.viewRows.sub': 'Nombre de lignes de semaines affichées',
+  'options.calendar.heading': 'Calendrier',
+  'options.calendar.label': 'Lignes visibles à la fois',
+  'options.calendar.sub': 'Nombre de lignes de semaines affichées',
+  'options.calendar.weekNumber.label': 'Afficher les numéros de semaine',
+  'options.calendar.weekNumber.sub': 'Afficher les numéros de semaine ISO dans le calendrier',
 
   // Paramètres – apparence
   'options.theme.heading': 'Apparence',
