@@ -27,6 +27,11 @@ const fr = {
   'options.language.auto': 'Automatique (langue du navigateur)',
   'options.language.saved': 'Enregistré !',
 
+  // Paramètres – calendrier
+  'options.viewRows.heading': 'Lignes du calendrier',
+  'options.viewRows.label': 'Lignes visibles à la fois',
+  'options.viewRows.sub': 'Nombre de lignes de semaines affichées',
+
   // Paramètres – apparence
   'options.theme.heading': 'Apparence',
   'options.theme.auto':  'Automatique',

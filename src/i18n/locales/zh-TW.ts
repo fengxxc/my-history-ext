@@ -27,6 +27,11 @@ const zhTW = {
   'options.language.auto': '自動（跟隨瀏覽器）',
   'options.language.saved': '已儲存！',
 
+  // 設定 – 日曆
+  'options.viewRows.heading': '日曆行數',
+  'options.viewRows.label': '同時顯示的行數',
+  'options.viewRows.sub': '日曆視埠中顯示的週行數',
+
   // 設定 – 外觀
   'options.theme.heading': '外觀',
   'options.theme.auto':  '自動',

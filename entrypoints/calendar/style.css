@@ -22,8 +22,15 @@
   flex-shrink: 0;
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   gap: var(--space-4);
   margin: var(--space-1) var(--space-4) var(--space-2) 60px; /* 60px left offsets for calendar week-name column */
+}
+
+.calendar-toolbar-part {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
 }
 
 .calendar-toolbar__title {
@@ -127,4 +134,40 @@
 .calendar-date-wrapper .calendar-date-content .url-item .url-item__url {
   color: var(--color-text);
   text-decoration: none;
+}
+
+/* ── Settings button & popup ─────────────────────────────────────────────────────*/
+
+.cal-settings-anchor {
+  position: relative;
+  /* align with other toolbar controls which use baseline */
+  align-self: center;
+}
+
+.cal-settings-popup {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: 200;
+  width: 260px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+}
+
+.cal-settings-popup__heading {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-3);
+}
+
+.cal-settings-popup__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
 }

@@ -27,6 +27,11 @@ const de = {
   'options.language.auto': 'Automatisch (Browsersprache)',
   'options.language.saved': 'Gespeichert!',
 
+  // Einstellungen – Kalender
+  'options.viewRows.heading': 'Kalenderzeilen',
+  'options.viewRows.label': 'Gleichzeitig angezeigte Zeilen',
+  'options.viewRows.sub': 'Wochenzeilenzahl im Kalender-Viewport',
+
   // Einstellungen – Erscheinungsbild
   'options.theme.heading': 'Erscheinungsbild',
   'options.theme.auto':  'Automatisch',

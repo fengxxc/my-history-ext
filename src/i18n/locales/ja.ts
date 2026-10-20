@@ -27,6 +27,11 @@ const ja = {
   'options.language.auto': '自動（ブラウザに従う）',
   'options.language.saved': '保存しました！',
 
+  // 設定 – カレンダー
+  'options.viewRows.heading': 'カレンダーの行数',
+  'options.viewRows.label': '同時に表示する行数',
+  'options.viewRows.sub': 'カレンダーに表示する週行数',
+
   // 設定 – 外観
   'options.theme.heading': '外観',
   'options.theme.auto':  '自動',

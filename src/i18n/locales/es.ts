@@ -27,6 +27,11 @@ const es = {
   'options.language.auto': 'Automático (idioma del navegador)',
   'options.language.saved': '¡Guardado!',
 
+  // Configuración – calendario
+  'options.viewRows.heading': 'Filas del calendario',
+  'options.viewRows.label': 'Filas visibles a la vez',
+  'options.viewRows.sub': 'Filas de semana mostradas en el calendario',
+
   // Configuración – apariencia
   'options.theme.heading': 'Apariencia',
   'options.theme.auto':  'Automático',

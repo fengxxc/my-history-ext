@@ -27,6 +27,11 @@ const zh = {
   'options.language.auto': '自动（跟随浏览器）',
   'options.language.saved': '已保存！',
 
+  // 设置 – 日历
+  'options.viewRows.heading': '日历行数',
+  'options.viewRows.label': '同时显示的行数',
+  'options.viewRows.sub': '日历视口中显示的周行数',
+
   // 设置 – 外观
   'options.theme.heading': '外观',
   'options.theme.auto':  '自动',

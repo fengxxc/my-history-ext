@@ -140,6 +140,14 @@ body {
   font-weight: var(--font-weight-bold);
 }
 
+/* ── Section description ────────────────────────────────────────────────────*/
+
+.options-section__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
 /* ── Saved toast ─────────────────────────────────────────────────────────────*/
 
 .saved-toast {

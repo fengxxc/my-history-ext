@@ -27,6 +27,11 @@ const en = {
   'options.language.auto': 'Auto (follow browser)',
   'options.language.saved': 'Saved!',
 
+  // Options – calendar
+  'options.viewRows.heading': 'Calendar Rows',
+  'options.viewRows.label': 'Rows visible at once',
+  'options.viewRows.sub': 'Week rows shown in the calendar viewport',
+
   // Options – theme
   'options.theme.heading': 'Appearance',
   'options.theme.auto':  'Auto',

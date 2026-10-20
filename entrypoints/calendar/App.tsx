@@ -8,6 +8,7 @@ import FreeCalendar, {
 import { FormattedDate, FormattedMessage, useIntl } from '@/src/i18n';
 import { useCSSVariable } from '@/src/theme';
 import { joinUrl, listHistories, type HistoryRecord } from '@/src/db';
+import { useViewRows, VIEW_ROWS_MIN, VIEW_ROWS_MAX } from '@/src/calendar-settings';
 
 /** 从 IndexedDB 读取指定时间区间的访问记录 */
 const fetchHistory = async (startTime: number, endTime: number): Promise<HistoryItem[]> => {
@@ -21,6 +22,7 @@ export default function App() {
 
   const [fixedDate, setFixedDate] = useState(() => new Date());
   const fixedProp = useMemo(() => ({ date: fixedDate, smooth: true }), [fixedDate]);
+  const [viewRows, setViewRows] = useViewRows();
 
   const [viewYear, setViewYear] = useState(() => new Date().getFullYear());
 
@@ -56,36 +58,41 @@ export default function App() {
   return (
     <div className="calendar-container">
       <div className="calendar-toolbar">
-        <h1 className="calendar-toolbar__title">
-          <FormattedMessage id="calendar.title" />
-        </h1>
-        <div className="calendar-toolbar__control">
-          <label htmlFor="year-input">
-            <FormattedMessage id="calendar.year.label" />
-            {': '}
-          </label>
-          <input
-            id="year-input"
-            type="number"
-            min={1970}
-            max={new Date().getFullYear()}
-            step={1}
-            value={viewYear}
-            onChange={(e) => {
-              const y = parseInt(e.target.value);
-              if (!isNaN(y)) setViewYear(y);
-            }}
-            className="calendar-toolbar__year-input"
-          />
+        <div className="calendar-toolbar-part" >
+          <h1 className="calendar-toolbar__title">
+            <FormattedMessage id="calendar.title" />
+          </h1>
+          <div className="calendar-toolbar__control">
+            <label htmlFor="year-input">
+              <FormattedMessage id="calendar.year.label" />
+              {': '}
+            </label>
+            <input
+              id="year-input"
+              type="number"
+              min={1970}
+              max={new Date().getFullYear()}
+              step={1}
+              value={viewYear}
+              onChange={(e) => {
+                const y = parseInt(e.target.value);
+                if (!isNaN(y)) setViewYear(y);
+              }}
+              className="calendar-toolbar__year-input"
+            />
+          </div>
+          <div className="calendar-toolbar__control">
+            <button className="btn btn--default" onClick={() => {
+              const today = new Date();
+              setViewYear(today.getFullYear());
+              setFixedDate(today);
+            }}>
+              <FormattedMessage id="calendar.today.button" />
+            </button>
+          </div>
         </div>
-        <div className="calendar-toolbar__control">
-          <button className="btn btn--default" onClick={() => {
-            const today = new Date();
-            setViewYear(today.getFullYear());
-            setFixedDate(today);
-          }}>
-            <FormattedMessage id="calendar.today.button" />
-          </button>
+        <div className="calendar-toolbar-part">
+          <CalendarSettingsButton viewRows={viewRows} setViewRows={setViewRows} />
         </div>
       </div>
 
@@ -117,6 +124,7 @@ export default function App() {
             />
           )}
           fixed={fixedProp}
+          viewRows={viewRows}
           datesWrapper={(children, ref) => (
             <div ref={ref} className="scrollbar">
               {children}
@@ -134,6 +142,87 @@ export default function App() {
     </div>
   );
 }
+
+// ─── Calendar settings button & popup ───────────────────────────────────────
+
+interface ViewRowsPopupProps {
+  viewRows: number;
+  setViewRows: (n: number) => Promise<void>;
+}
+
+const ViewRowsPopup: React.FC<ViewRowsPopupProps> = ({ viewRows, setViewRows }) => {
+  const intl = useIntl();
+  return (
+    <div className="cal-settings-popup">
+      <h3 className="cal-settings-popup__heading">
+        📅 <FormattedMessage id="options.viewRows.heading" />
+      </h3>
+      <p className="cal-settings-popup__desc">
+        <FormattedMessage id="options.viewRows.sub" />
+      </p>
+      <div className="view-rows-stepper">
+        <button
+          className="btn btn--default view-rows-stepper__btn"
+          aria-label={intl.formatMessage({ id: 'calendar.viewRows.decrease' })}
+          disabled={viewRows <= VIEW_ROWS_MIN}
+          onClick={() => setViewRows(viewRows - 1)}
+        >
+          −
+        </button>
+        <span
+          className="view-rows-stepper__value"
+          aria-label={intl.formatMessage({ id: 'options.viewRows.label' })}
+        >
+          {viewRows}
+        </span>
+        <button
+          className="btn btn--default view-rows-stepper__btn"
+          aria-label={intl.formatMessage({ id: 'calendar.viewRows.increase' })}
+          disabled={viewRows >= VIEW_ROWS_MAX}
+          onClick={() => setViewRows(viewRows + 1)}
+        >
+          +
+        </button>
+      </div>
+    </div>
+  );
+};
+
+interface CalendarSettingsButtonProps {
+  viewRows: number;
+  setViewRows: (n: number) => Promise<void>;
+}
+
+const CalendarSettingsButton: React.FC<CalendarSettingsButtonProps> = ({ viewRows, setViewRows }) => {
+  const intl = useIntl();
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (anchorRef.current && !anchorRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  return (
+    <div className="cal-settings-anchor" ref={anchorRef}>
+      <button
+        className="btn btn--icon-ghost"
+        aria-label={intl.formatMessage({ id: 'options.title' })}
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        ⚙️
+      </button>
+      {open && <ViewRowsPopup viewRows={viewRows} setViewRows={setViewRows} />}
+    </div>
+  );
+};
 
 interface HistoryItem extends HistoryRecord {
   // Add any additional properties specific to your application

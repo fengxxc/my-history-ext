@@ -174,3 +174,36 @@
   color: var(--color-text-muted);
   padding: var(--space-8) var(--space-4);
 }
+
+
+/* ── View-rows stepper ───────────────────────────────────────────────────────
+   Used in both the options page section and the calendar toolbar popup.
+────────────────────────────────────────────────────────────────────────────── */
+
+.view-rows-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.view-rows-stepper__btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.view-rows-stepper__value {
+  min-width: 2rem;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  line-height: 1;
+}

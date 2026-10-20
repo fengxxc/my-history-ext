@@ -10,6 +10,7 @@ import {
 import type { LocaleSetting, SupportedLocale } from '@/src/i18n';
 import { THEME_OPTIONS, useTheme } from '@/src/theme';
 import type { ThemeSetting } from '@/src/theme';
+import { useViewRows, VIEW_ROWS_MIN, VIEW_ROWS_MAX } from '@/src/calendar-settings';
 
 // ─── Saved toast ──────────────────────────────────────────────────────────────
 
@@ -157,6 +158,60 @@ function LanguageSection() {
   );
 }
 
+// ─── View rows section ───────────────────────────────────────────────────────
+
+function ViewRowsSection() {
+  const intl = useIntl();
+  const [viewRows, setViewRows] = useViewRows();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastTimer, setToastTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = () => {
+    setToastVisible(true);
+    if (toastTimer) clearTimeout(toastTimer);
+    const t = setTimeout(() => setToastVisible(false), 2000);
+    setToastTimer(t);
+  };
+
+  const handleChange = async (next: number) => {
+    await setViewRows(next);
+    showToast();
+  };
+
+  return (
+    <section className="options-section">
+      <h2 className="options-section__heading">
+        📅 <FormattedMessage id="options.viewRows.heading" />
+      </h2>
+      <p className="options-section__desc">
+        <FormattedMessage id="options.viewRows.sub" />
+      </p>
+      <div className="view-rows-stepper">
+        <button
+          className="btn btn--default view-rows-stepper__btn"
+          aria-label="decrease"
+          disabled={viewRows <= VIEW_ROWS_MIN}
+          onClick={() => handleChange(viewRows - 1)}
+        >
+          −
+        </button>
+        <span className="view-rows-stepper__value" aria-label={intl.formatMessage({ id: 'options.viewRows.label' })}>
+          {viewRows}
+        </span>
+        <button
+          className="btn btn--default view-rows-stepper__btn"
+          aria-label="increase"
+          disabled={viewRows >= VIEW_ROWS_MAX}
+          onClick={() => handleChange(viewRows + 1)}
+        >
+          +
+        </button>
+      </div>
+      <SavedToast visible={toastVisible} />
+    </section>
+  );
+}
+
 // ─── Main options page ────────────────────────────────────────────────────────
 
 export default function App() {
@@ -172,6 +227,7 @@ export default function App() {
 
       <main className="options-main">
         <ThemeSection />
+        <ViewRowsSection />
         <LanguageSection />
       </main>
     </div>

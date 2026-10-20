@@ -27,6 +27,11 @@ const ko = {
   'options.language.auto': '자동 (브라우저 언어 사용)',
   'options.language.saved': '저장되었습니다!',
 
+  // 설정 – 달력
+  'options.viewRows.heading': '달력 행 수',
+  'options.viewRows.label': '한 번에 표시할 행 수',
+  'options.viewRows.sub': '달력 화면에 표시할 주 행 수',
+
   // 설정 – 외관
   'options.theme.heading': '외관',
   'options.theme.auto':  '자동',
