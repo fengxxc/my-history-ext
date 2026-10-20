@@ -6,12 +6,13 @@ import FreeCalendar, {
 import { FormattedDate, FormattedMessage, useIntl } from '@/src/i18n';
 import { useCSSVariable } from '@/src/theme';
 import { joinUrl, listHistories, type HistoryRecord } from '@/src/db';
-import { useViewRows, useShowWeekNumber } from '@/src/calendar-settings';
+import { useViewRows, useShowWeekNumber, useMondayFirst } from '@/src/calendar-settings';
 import {
   ThemePickerContent,
   LanguagePickerContent,
   ViewRowsStepperContent,
   ShowWeekNumberToggleContent,
+  MondayFirstToggleContent,
 } from '@/src/settings-ui';
 import { Icon } from '@/src/components/Icon';
 
@@ -29,6 +30,7 @@ export default function App() {
   const fixedProp = useMemo(() => ({ date: fixedDate, smooth: true }), [fixedDate]);
   const [viewRows] = useViewRows();
   const [showWeekNumber] = useShowWeekNumber();
+  const [mondayFirst] = useMondayFirst();
 
   const [viewYear, setViewYear] = useState(() => new Date().getFullYear());
   const [viewMonth, setViewMonth] = useState(1);
@@ -111,7 +113,7 @@ export default function App() {
           id={'my-history-calendar'}
           start={new Date(viewYear, 0, 1)}
           end={CalendarUtil.getMonthLastDay(new Date(viewYear, 11, 1))}
-          mondayIsFirstAtWeek={true}
+          mondayIsFirstAtWeek={mondayFirst}
           DateContent={({ date, active }) => (
             <MyDateContent
               date={date}
@@ -183,6 +185,11 @@ const CalendarSettingsPopup: React.FC = () => {
           <FormattedMessage id="options.calendar.weekNumber.sub" />
         </p>
         <ShowWeekNumberToggleContent />
+        <hr className="settings-section-divider" />
+        <p className="cal-settings-popup__desc">
+          <FormattedMessage id="options.calendar.mondayFirst.sub" />
+        </p>
+        <MondayFirstToggleContent />
       </div>
 
       <div className="cal-settings-divider" />

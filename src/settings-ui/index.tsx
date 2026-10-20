@@ -26,7 +26,7 @@ import {
 import type { LocaleSetting, SupportedLocale } from '@/src/i18n';
 import { THEME_OPTIONS, useTheme } from '@/src/theme';
 import type { ThemeSetting } from '@/src/theme';
-import { useViewRows, VIEW_ROWS_MIN, VIEW_ROWS_MAX, useShowWeekNumber } from '@/src/calendar-settings';
+import { useViewRows, VIEW_ROWS_MIN, VIEW_ROWS_MAX, useShowWeekNumber, useMondayFirst } from '@/src/calendar-settings';
 
 // ─── Saved toast ──────────────────────────────────────────────────────────────
 
@@ -207,6 +207,46 @@ export function ShowWeekNumberToggleContent() {
         <span className="week-number-toggle__track" />
         <span className="week-number-toggle__label">
           <FormattedMessage id="options.calendar.weekNumber.label" />
+        </span>
+      </label>
+      <SavedToast visible={toastVisible} />
+    </>
+  );
+}
+
+// ─── Monday-first toggle content ────────────────────────────────────────────
+
+export function MondayFirstToggleContent() {
+  const intl = useIntl();
+  const [mondayFirst, setMondayFirst] = useMondayFirst();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastTimer, setToastTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = () => {
+    setToastVisible(true);
+    if (toastTimer) clearTimeout(toastTimer);
+    const t = setTimeout(() => setToastVisible(false), 2000);
+    setToastTimer(t);
+  };
+
+  const handleChange = async (next: boolean) => {
+    await setMondayFirst(next);
+    showToast();
+  };
+
+  return (
+    <>
+      <label className="week-number-toggle">
+        <input
+          type="checkbox"
+          className="week-number-toggle__input"
+          checked={mondayFirst}
+          onChange={(e) => handleChange(e.target.checked)}
+          aria-label={intl.formatMessage({ id: 'options.calendar.mondayFirst.label' })}
+        />
+        <span className="week-number-toggle__track" />
+        <span className="week-number-toggle__label">
+          <FormattedMessage id="options.calendar.mondayFirst.label" />
         </span>
       </label>
       <SavedToast visible={toastVisible} />

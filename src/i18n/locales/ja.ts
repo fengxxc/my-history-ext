@@ -33,6 +33,8 @@ const ja = {
   'options.calendar.sub': 'カレンダーに表示する週行数',
   'options.calendar.weekNumber.label': '週番号を表示',
   'options.calendar.weekNumber.sub': 'カレンダーに ISO 週番号を表示する',
+  'options.calendar.mondayFirst.label': '週の始まりを月曜日にする',
+  'options.calendar.mondayFirst.sub': '月曜日を週の最初の日として設定します',
 
   // 設定 – 外観
   'options.theme.heading': '外観',

@@ -33,6 +33,8 @@ const es = {
   'options.calendar.sub': 'Filas de semana mostradas en el calendario',
   'options.calendar.weekNumber.label': 'Mostrar números de semana',
   'options.calendar.weekNumber.sub': 'Mostrar el número de semana ISO en el calendario',
+  'options.calendar.mondayFirst.label': 'La semana comienza el lunes',
+  'options.calendar.mondayFirst.sub': 'Establecer el lunes como primer día de la semana',
 
   // Configuración – apariencia
   'options.theme.heading': 'Apariencia',

@@ -33,6 +33,8 @@ const en = {
   'options.calendar.sub': 'Week rows shown in the calendar viewport',
   'options.calendar.weekNumber.label': 'Show week numbers',
   'options.calendar.weekNumber.sub': 'Display ISO week number in the calendar',
+  'options.calendar.mondayFirst.label': 'Week starts on Monday',
+  'options.calendar.mondayFirst.sub': 'Set Monday as the first day of the week',
 
   // Options – theme
   'options.theme.heading': 'Appearance',

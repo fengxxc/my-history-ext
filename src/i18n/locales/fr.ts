@@ -33,6 +33,8 @@ const fr = {
   'options.calendar.sub': 'Nombre de lignes de semaines affichées',
   'options.calendar.weekNumber.label': 'Afficher les numéros de semaine',
   'options.calendar.weekNumber.sub': 'Afficher les numéros de semaine ISO dans le calendrier',
+  'options.calendar.mondayFirst.label': 'La semaine commence le lundi',
+  'options.calendar.mondayFirst.sub': 'Définir le lundi comme premier jour de la semaine',
 
   // Paramètres – apparence
   'options.theme.heading': 'Apparence',

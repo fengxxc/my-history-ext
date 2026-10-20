@@ -6,6 +6,7 @@ import {
   LanguagePickerContent,
   ViewRowsStepperContent,
   ShowWeekNumberToggleContent,
+  MondayFirstToggleContent,
 } from '@/src/settings-ui';
 
 // ─── Section wrappers ─────────────────────────────────────────────────────────
@@ -40,6 +41,11 @@ function ViewRowsSection() {
         <FormattedMessage id="options.calendar.weekNumber.sub" />
       </p>
       <ShowWeekNumberToggleContent />
+      <hr className="settings-section-divider" />
+      <p className="options-section__desc">
+        <FormattedMessage id="options.calendar.mondayFirst.sub" />
+      </p>
+      <MondayFirstToggleContent />
     </section>
   );
 }

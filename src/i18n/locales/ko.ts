@@ -33,6 +33,8 @@ const ko = {
   'options.calendar.sub': '달력 화면에 표시할 주 행 수',
   'options.calendar.weekNumber.label': '주 번호 표시',
   'options.calendar.weekNumber.sub': '달력에 ISO 주 번호를 표시합니다',
+  'options.calendar.mondayFirst.label': '주의 시작을 월요일로 설정',
+  'options.calendar.mondayFirst.sub': '월요일을 매주 첫 번째 날로 설정합니다',
 
   // 설정 – 외관
   'options.theme.heading': '외관',

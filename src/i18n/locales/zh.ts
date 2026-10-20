@@ -33,6 +33,8 @@ const zh = {
   'options.calendar.sub': '日历视口中显示的周行数',
   'options.calendar.weekNumber.label': '显示周数',
   'options.calendar.weekNumber.sub': '在日历中显示 ISO 周数',
+  'options.calendar.mondayFirst.label': '周一为每周第一天',
+  'options.calendar.mondayFirst.sub': '将星期一设为每周的起始日',
 
   // 设置 – 外观
   'options.theme.heading': '外观',

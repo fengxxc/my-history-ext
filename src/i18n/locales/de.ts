@@ -33,6 +33,8 @@ const de = {
   'options.calendar.sub': 'Wochenzeilenzahl im Kalender-Viewport',
   'options.calendar.weekNumber.label': 'Wochennummern anzeigen',
   'options.calendar.weekNumber.sub': 'ISO-Wochennummern im Kalender anzeigen',
+  'options.calendar.mondayFirst.label': 'Woche beginnt am Montag',
+  'options.calendar.mondayFirst.sub': 'Montag als ersten Tag der Woche festlegen',
 
   // Einstellungen – Erscheinungsbild
   'options.theme.heading': 'Erscheinungsbild',

@@ -33,6 +33,8 @@ const zhTW = {
   'options.calendar.sub': '日曆視埠中顯示的週行數',
   'options.calendar.weekNumber.label': '顯示週數',
   'options.calendar.weekNumber.sub': '在日曆中顯示 ISO 週數',
+  'options.calendar.mondayFirst.label': '週一為每週第一天',
+  'options.calendar.mondayFirst.sub': '將星期一設為每週的起始日',
 
   // 設定 – 外觀
   'options.theme.heading': '外觀',
