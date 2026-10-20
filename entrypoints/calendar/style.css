@@ -149,21 +149,34 @@
   top: calc(100% + var(--space-2));
   right: 0;
   z-index: 200;
-  width: 260px;
+  /* Wide enough for a 3-column theme picker */
+  width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
   background: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  padding: var(--space-5);
+  /* No padding here — sections carry their own */
+}
+
+.cal-settings-section {
+  padding: var(--space-4) var(--space-5);
+}
+
+.cal-settings-divider {
+  height: 1px;
+  background: var(--color-divider);
+  margin: 0;
 }
 
 .cal-settings-popup__heading {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .cal-settings-popup__desc {

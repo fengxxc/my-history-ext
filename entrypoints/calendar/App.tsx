@@ -1,14 +1,17 @@
 import React from 'react';
 import FreeCalendar, {
-  SimpleOneDayContent,
   CalendarUtil,
   type WheelTypeType,
-  type DateContentProps,
 } from 'react-free-calendar';
 import { FormattedDate, FormattedMessage, useIntl } from '@/src/i18n';
 import { useCSSVariable } from '@/src/theme';
 import { joinUrl, listHistories, type HistoryRecord } from '@/src/db';
-import { useViewRows, VIEW_ROWS_MIN, VIEW_ROWS_MAX } from '@/src/calendar-settings';
+import { useViewRows } from '@/src/calendar-settings';
+import {
+  ThemePickerContent,
+  LanguagePickerContent,
+  ViewRowsStepperContent,
+} from '@/src/settings-ui';
 
 /** 从 IndexedDB 读取指定时间区间的访问记录 */
 const fetchHistory = async (startTime: number, endTime: number): Promise<HistoryItem[]> => {
@@ -22,10 +25,9 @@ export default function App() {
 
   const [fixedDate, setFixedDate] = useState(() => new Date());
   const fixedProp = useMemo(() => ({ date: fixedDate, smooth: true }), [fixedDate]);
-  const [viewRows, setViewRows] = useViewRows();
+  const [viewRows] = useViewRows();
 
   const [viewYear, setViewYear] = useState(() => new Date().getFullYear());
-
   const [viewMonth, setViewMonth] = useState(1);
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,8 +35,7 @@ export default function App() {
 
   useEffect(() => {
     let ignore = false;
-    // 计算当前视图的时间范围（上个月的第一天到下个月的最后一天）
-    const startTime = new Date(viewYear, viewMonth - 1 - 1, 1).getTime();
+    const startTime = new Date(viewYear, viewMonth - 2, 1).getTime();
     const endTime = new Date(viewYear, viewMonth + 1, 1).getTime() - 1;
 
     async function loadHistory() {
@@ -58,7 +59,7 @@ export default function App() {
   return (
     <div className="calendar-container">
       <div className="calendar-toolbar">
-        <div className="calendar-toolbar-part" >
+        <div className="calendar-toolbar-part">
           <h1 className="calendar-toolbar__title">
             <FormattedMessage id="calendar.title" />
           </h1>
@@ -82,17 +83,20 @@ export default function App() {
             />
           </div>
           <div className="calendar-toolbar__control">
-            <button className="btn btn--default" onClick={() => {
-              const today = new Date();
-              setViewYear(today.getFullYear());
-              setFixedDate(today);
-            }}>
+            <button
+              className="btn btn--default"
+              onClick={() => {
+                const today = new Date();
+                setViewYear(today.getFullYear());
+                setFixedDate(today);
+              }}
+            >
               <FormattedMessage id="calendar.today.button" />
             </button>
           </div>
         </div>
         <div className="calendar-toolbar-part">
-          <CalendarSettingsButton viewRows={viewRows} setViewRows={setViewRows} />
+          <CalendarSettingsButton />
         </div>
       </div>
 
@@ -143,57 +147,49 @@ export default function App() {
   );
 }
 
-// ─── Calendar settings button & popup ───────────────────────────────────────
+// ─── Calendar settings popup ──────────────────────────────────────────────────
+// Three sections mirroring the options page, sharing the same content components.
 
-interface ViewRowsPopupProps {
-  viewRows: number;
-  setViewRows: (n: number) => Promise<void>;
-}
-
-const ViewRowsPopup: React.FC<ViewRowsPopupProps> = ({ viewRows, setViewRows }) => {
+const CalendarSettingsPopup: React.FC = () => {
   const intl = useIntl();
   return (
-    <div className="cal-settings-popup">
-      <h3 className="cal-settings-popup__heading">
-        📅 <FormattedMessage id="options.viewRows.heading" />
-      </h3>
-      <p className="cal-settings-popup__desc">
-        <FormattedMessage id="options.viewRows.sub" />
-      </p>
-      <div className="view-rows-stepper">
-        <button
-          className="btn btn--default view-rows-stepper__btn"
-          aria-label={intl.formatMessage({ id: 'calendar.viewRows.decrease' })}
-          disabled={viewRows <= VIEW_ROWS_MIN}
-          onClick={() => setViewRows(viewRows - 1)}
-        >
-          −
-        </button>
-        <span
-          className="view-rows-stepper__value"
-          aria-label={intl.formatMessage({ id: 'options.viewRows.label' })}
-        >
-          {viewRows}
-        </span>
-        <button
-          className="btn btn--default view-rows-stepper__btn"
-          aria-label={intl.formatMessage({ id: 'calendar.viewRows.increase' })}
-          disabled={viewRows >= VIEW_ROWS_MAX}
-          onClick={() => setViewRows(viewRows + 1)}
-        >
-          +
-        </button>
+    <div className="cal-settings-popup scrollbar">
+
+      <div className="cal-settings-section">
+        <h3 className="cal-settings-popup__heading">
+          🎨 <FormattedMessage id="options.theme.heading" />
+        </h3>
+        <ThemePickerContent gridClass="picker-grid--3" />
       </div>
+
+      <div className="cal-settings-divider" />
+
+      <div className="cal-settings-section">
+        <h3 className="cal-settings-popup__heading">
+          📅 <FormattedMessage id="options.viewRows.heading" />
+        </h3>
+        <p className="cal-settings-popup__desc">
+          <FormattedMessage id="options.viewRows.sub" />
+        </p>
+        <ViewRowsStepperContent />
+      </div>
+
+      <div className="cal-settings-divider" />
+
+      <div className="cal-settings-section">
+        <h3 className="cal-settings-popup__heading">
+          🌐 <FormattedMessage id="options.language.heading" />
+        </h3>
+        <LanguagePickerContent />
+      </div>
+
     </div>
   );
 };
 
-interface CalendarSettingsButtonProps {
-  viewRows: number;
-  setViewRows: (n: number) => Promise<void>;
-}
+// ─── Settings button ──────────────────────────────────────────────────────────
 
-const CalendarSettingsButton: React.FC<CalendarSettingsButtonProps> = ({ viewRows, setViewRows }) => {
+const CalendarSettingsButton: React.FC = () => {
   const intl = useIntl();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -219,14 +215,14 @@ const CalendarSettingsButton: React.FC<CalendarSettingsButtonProps> = ({ viewRow
       >
         ⚙️
       </button>
-      {open && <ViewRowsPopup viewRows={viewRows} setViewRows={setViewRows} />}
+      {open && <CalendarSettingsPopup />}
     </div>
   );
 };
 
-interface HistoryItem extends HistoryRecord {
-  // Add any additional properties specific to your application
-}
+// ─── History items ────────────────────────────────────────────────────────────
+
+interface HistoryItem extends HistoryRecord { }
 
 interface MyDateContentProps {
   date: Date;
@@ -236,8 +232,15 @@ interface MyDateContentProps {
   onClick?: (date: Date) => void;
   datas: HistoryItem[];
 }
-const MyDateContent: React.FC<MyDateContentProps> = ({ date, color, backgroundColor, showMonthAtFirstOfMonth, onClick, datas }) => {
 
+const MyDateContent: React.FC<MyDateContentProps> = ({
+  date,
+  color,
+  backgroundColor,
+  showMonthAtFirstOfMonth,
+  onClick,
+  datas,
+}) => {
   return (
     <div className="calendar-date-wrapper">
       <div
@@ -245,7 +248,7 @@ const MyDateContent: React.FC<MyDateContentProps> = ({ date, color, backgroundCo
         style={{ backgroundColor, color }}
         onClick={() => onClick && onClick(date)}
       >
-        {date.getDate() == 1 && showMonthAtFirstOfMonth && (
+        {date.getDate() === 1 && showMonthAtFirstOfMonth && (
           <>
             <strong>{date.getMonth() + 1}</strong>
             <span>/</span>
@@ -257,8 +260,16 @@ const MyDateContent: React.FC<MyDateContentProps> = ({ date, color, backgroundCo
       <ul className="calendar-date-content scrollbar">
         {datas.map((item) => (
           <li key={item.id} className="url-item">
-            <span className="url-item__time">{new Date(item.visitTime).toLocaleTimeString()}</span>
-            <a href={joinUrl(item)} target="_blank" rel="noopener noreferrer" className="url-item__url" title={item.title}>
+            <span className="url-item__time">
+              {new Date(item.visitTime).toLocaleTimeString()}
+            </span>
+            <a
+              href={joinUrl(item)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="url-item__url"
+              title={item.title}
+            >
               {item.title || joinUrl(item)}
             </a>
           </li>
@@ -266,4 +277,4 @@ const MyDateContent: React.FC<MyDateContentProps> = ({ date, color, backgroundCo
       </ul>
     </div>
   );
-}
+};

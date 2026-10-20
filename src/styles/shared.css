@@ -176,6 +176,117 @@
 }
 
 
+/* ── Picker grid ──────────────────────────────────────────────────────────────────────────────
+   Shared by theme, language, and any future picker sections.
+   --3 modifier locks to exactly three equal columns.
+────────────────────────────────────────────────────────────────────────────── */
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-3);
+}
+
+.picker-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+/* ── Picker card ──────────────────────────────────────────────────────────────────────────────
+   Generic selectable card. Used for themes, languages, and any future picker.
+────────────────────────────────────────────────────────────────────────────── */
+
+.picker-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+  position: relative;
+  user-select: none;
+  background: var(--color-surface-raised);
+}
+
+.picker-card:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-hover-bg);
+  box-shadow: var(--shadow-ring-sm);
+}
+
+.picker-card--selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  box-shadow: var(--shadow-ring);
+}
+
+/* Hide the native radio; the card itself is the accessible control */
+.picker-card__radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.picker-card__icon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.picker-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.picker-card__label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.picker-card__sub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.picker-card__check {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+
+/* ── Saved toast ──────────────────────────────────────────────────────────────────────────────
+   Animated confirmation shown after a setting is persisted.
+   Used inside any settings content component.
+────────────────────────────────────────────────────────────────────────────── */
+
+.saved-toast {
+  display: inline-block;
+  margin-top: var(--space-4);
+  font-size: var(--font-size-base);
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+  transition: opacity var(--transition-slow);
+}
+
+
 /* ── View-rows stepper ───────────────────────────────────────────────────────
    Used in both the options page section and the calendar toolbar popup.
 ────────────────────────────────────────────────────────────────────────────── */
