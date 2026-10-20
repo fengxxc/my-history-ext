@@ -14,6 +14,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { Icon } from '@/src/components/Icon';
 import {
   FormattedMessage,
   useIntl,
@@ -38,7 +39,8 @@ export function SavedToast({ visible }: { visible: boolean }) {
       aria-live="polite"
       style={{ opacity: visible ? 1 : 0 }}
     >
-      ✓ {intl.formatMessage({ id: 'options.language.saved' })}
+      <Icon name="check" size={14} style={{ marginRight: 4 }} />
+      {intl.formatMessage({ id: 'options.language.saved' })}
     </span>
   );
 }
@@ -48,7 +50,7 @@ export function SavedToast({ visible }: { visible: boolean }) {
 export interface PickerCardProps {
   name: string;
   value: string;
-  icon: string;
+  icon: string | React.ReactNode;
   label: string;
   subLabel: string;
   selected: boolean;
@@ -71,7 +73,11 @@ export function PickerCard({ name, value, icon, label, subLabel, selected, onSel
         <span className="picker-card__label">{label}</span>
         <span className="picker-card__sub">{subLabel}</span>
       </span>
-      {selected && <span className="picker-card__check">✓</span>}
+      {selected && (
+        <span className="picker-card__check">
+          <Icon name="check" size={14} />
+        </span>
+      )}
     </label>
   );
 }
@@ -89,12 +95,12 @@ export function ThemePickerContent({ gridClass }: ThemePickerContentProps) {
 
   return (
     <div className={['picker-grid', gridClass].filter(Boolean).join(' ')}>
-      {THEME_OPTIONS.map(({ value, icon, labelKey }) => (
+      {THEME_OPTIONS.map(({ value, iconName: iconName, labelKey }) => (
         <PickerCard
           key={value}
           name="theme"
           value={value}
-          icon={icon}
+          icon={<Icon name={iconName} size={18} />}
           label={intl.formatMessage({ id: labelKey as string })}
           subLabel={intl.formatMessage({ id: `${labelKey}.sub` as string })}
           selected={themeSetting === value}
@@ -144,7 +150,7 @@ export function LanguagePickerContent() {
         <PickerCard
           name="locale"
           value="auto"
-          icon="🌐"
+          icon={<Icon name="globe" size={18} />}
           label={intl.formatMessage({ id: 'options.language.auto' })}
           subLabel={autoSubLabel}
           selected={setting === 'auto'}
@@ -197,7 +203,7 @@ export function ViewRowsStepperContent() {
           disabled={viewRows <= VIEW_ROWS_MIN}
           onClick={() => handleChange(viewRows - 1)}
         >
-          −
+          <Icon name="chevronDown" size={18} />
         </button>
         <span
           className="view-rows-stepper__value"
@@ -211,7 +217,7 @@ export function ViewRowsStepperContent() {
           disabled={viewRows >= VIEW_ROWS_MAX}
           onClick={() => handleChange(viewRows + 1)}
         >
-          +
+          <Icon name="chevronUp" size={18} />
         </button>
       </div>
       <SavedToast visible={toastVisible} />

@@ -17,6 +17,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import type { IconName } from '../components';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -25,15 +26,15 @@ export type ThemeSetting = 'auto' | 'light' | 'dark';
 export interface ThemeMeta {
   value: ThemeSetting;
   /** Emoji icon shown in the picker card */
-  icon: string;
+  iconName: IconName;
   /** i18n message key for the card label */
   labelKey: string;
 }
 
 export const THEME_OPTIONS: ThemeMeta[] = [
-  { value: 'auto',  icon: '🌓', labelKey: 'options.theme.auto'  },
-  { value: 'light', icon: '☀️', labelKey: 'options.theme.light' },
-  { value: 'dark',  icon: '🌙', labelKey: 'options.theme.dark'  },
+  { value: 'auto',  iconName: 'sunMoon', labelKey: 'options.theme.auto'  },
+  { value: 'light', iconName: 'sun', labelKey: 'options.theme.light' },
+  { value: 'dark',  iconName: 'moon', labelKey: 'options.theme.dark'  },
 ];
 
 // ─── Storage keys ─────────────────────────────────────────────────────────────

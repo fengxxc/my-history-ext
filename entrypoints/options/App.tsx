@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from '@/src/i18n';
+import { Icon } from '@/src/components/Icon';
 import {
   ThemePickerContent,
   LanguagePickerContent,
@@ -14,7 +15,8 @@ function ThemeSection() {
   return (
     <section className="options-section">
       <h2 className="options-section__heading">
-        🎨 <FormattedMessage id="options.theme.heading" />
+        <Icon name="palette" size={18} />
+        <FormattedMessage id="options.theme.heading" />
       </h2>
       <ThemePickerContent gridClass="picker-grid--3" />
     </section>
@@ -25,7 +27,8 @@ function ViewRowsSection() {
   return (
     <section className="options-section">
       <h2 className="options-section__heading">
-        📅 <FormattedMessage id="options.viewRows.heading" />
+        <Icon name="calendar" size={18} />
+        <FormattedMessage id="options.viewRows.heading" />
       </h2>
       <p className="options-section__desc">
         <FormattedMessage id="options.viewRows.sub" />
@@ -39,7 +42,8 @@ function LanguageSection() {
   return (
     <section className="options-section">
       <h2 className="options-section__heading">
-        🌐 <FormattedMessage id="options.language.heading" />
+        <Icon name="globe" size={18} />
+        <FormattedMessage id="options.language.heading" />
       </h2>
       <LanguagePickerContent />
     </section>
@@ -52,7 +56,7 @@ export default function App() {
   return (
     <div className="options-page">
       <header className="page-header options-header">
-        <span className="page-header__icon">📜</span>
+        <Icon name="history" size={22} className="page-header__icon" />
         <h1 className="page-header__title">My History</h1>
         <span className="page-header__subtitle">
           <FormattedMessage id="options.title" />

@@ -1,5 +1,23 @@
 /**
  * Shared Components
+ *
+ * Also covers the .icon utility class produced by the Icon component.
+ */
+
+/* ── Icon ────────────────────────────────────────────────────────────────────
+   Applied to every <svg> rendered by <Icon />.
+   Keeps icons vertically centred in flex/text contexts.
+────────────────────────────────────────────────────────────────────────────── */
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  line-height: 0;  /* prevent extra baseline space */
+}
+
+/**
+ * Shared Components
  * Reusable class-based utilities consumed by every entrypoint.
  * Rules here must be generic enough to work across popup, options, and calendar.
  */
@@ -21,9 +39,10 @@
 }
 
 .page-header__icon {
-  font-size: var(--font-size-xl);
-  line-height: 1;
+  font-size: var(--font-size-xl); /* keeps emoji fallbacks the right size */
+  line-height: 0;
   flex-shrink: 0;
+  color: var(--color-on-primary);
 }
 
 .page-header__title {
@@ -100,16 +119,29 @@
   background: var(--color-on-primary-ghost-hover);
 }
 
-/* Ghost icon button — no border, smaller padding */
-.btn--icon-ghost {
+.btn--ghost {
   background: transparent;
   color: var(--color-on-primary);
   border-color: transparent;
   padding: 6px var(--space-2);
 }
 
-.btn--icon-ghost:hover {
+.btn--ghost:hover {
   background: var(--color-on-primary-ghost);
+}
+
+.btn--icon-ghost {
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  color: var(--color-text-secondary);
+  border-color: transparent;
+  padding: 6px var(--space-2);
+}
+
+.btn--icon-ghost:hover {
+  background: var(--color-on-primary-ghost-hover);
+  color: var(--color-text);
+  border-color: transparent;
 }
 
 /* Compact size modifier (for header toolbar buttons) */

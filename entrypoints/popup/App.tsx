@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from '@/src/i18n';
+import { Icon } from '@/src/components/Icon';
 
 interface HistoryItem {
   id: string;
@@ -19,7 +20,7 @@ export default function App() {
   const fetchHistory = async (query: string = '') => {
     setLoading(true);
     try {
-      const results = await browser.history.search({
+      const results: Browser.history.HistoryItem[] = await browser.history.search({
         text: query,
         maxResults: 50,
         startTime: Date.now() - 7 * 24 * 60 * 60 * 1000, // Last 7 days
@@ -50,21 +51,25 @@ export default function App() {
     <div className="popup-container">
       <header className="page-header popup-header">
         <h1 className="popup-header__title">
-          📜 <FormattedMessage id="app.title" />
+          <Icon name="history" size={18} style={{ marginRight: 6 }} />
+          <FormattedMessage id="app.title" />
         </h1>
         <div className="popup-header__actions">
           <button
             className="btn btn--ghost-white btn--sm"
             onClick={() => browser.tabs.create({ url: browser.runtime.getURL('/calendar.html') })}
           >
-            📅 <FormattedMessage id="app.openCalendar" />
+            <Icon name="calendar" size={14} />
+            <FormattedMessage id="app.openCalendar" />
           </button>
           <button
-            className="btn btn--icon-ghost btn--sm"
+            // className="btn btn--icon-ghost btn--sm"
+            className="btn btn--ghost btn--sm"
             onClick={() => browser.runtime.openOptionsPage()}
             title={intl.formatMessage({ id: 'app.openOptions' })}
           >
-            ⚙️ <FormattedMessage id="app.openOptions" />
+            <Icon name="settings" size={14} />
+            <FormattedMessage id="app.openOptions" />
           </button>
         </div>
       </header>

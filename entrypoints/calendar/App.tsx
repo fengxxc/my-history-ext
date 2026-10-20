@@ -12,6 +12,7 @@ import {
   LanguagePickerContent,
   ViewRowsStepperContent,
 } from '@/src/settings-ui';
+import { Icon } from '@/src/components/Icon';
 
 /** 从 IndexedDB 读取指定时间区间的访问记录 */
 const fetchHistory = async (startTime: number, endTime: number): Promise<HistoryItem[]> => {
@@ -96,7 +97,9 @@ export default function App() {
           </div>
         </div>
         <div className="calendar-toolbar-part">
-          <CalendarSettingsButton />
+          <div className="calendar-toolbar__control">
+            <CalendarSettingsButton />
+          </div>
         </div>
       </div>
 
@@ -157,7 +160,7 @@ const CalendarSettingsPopup: React.FC = () => {
 
       <div className="cal-settings-section">
         <h3 className="cal-settings-popup__heading">
-          🎨 <FormattedMessage id="options.theme.heading" />
+          <Icon name="palette" size={18} /> <FormattedMessage id="options.theme.heading" />
         </h3>
         <ThemePickerContent gridClass="picker-grid--3" />
       </div>
@@ -166,7 +169,7 @@ const CalendarSettingsPopup: React.FC = () => {
 
       <div className="cal-settings-section">
         <h3 className="cal-settings-popup__heading">
-          📅 <FormattedMessage id="options.viewRows.heading" />
+          <Icon name="calendar" size={18} /> <FormattedMessage id="options.viewRows.heading" />
         </h3>
         <p className="cal-settings-popup__desc">
           <FormattedMessage id="options.viewRows.sub" />
@@ -178,7 +181,7 @@ const CalendarSettingsPopup: React.FC = () => {
 
       <div className="cal-settings-section">
         <h3 className="cal-settings-popup__heading">
-          🌐 <FormattedMessage id="options.language.heading" />
+          <Icon name="globe" size={18} /> <FormattedMessage id="options.language.heading" />
         </h3>
         <LanguagePickerContent />
       </div>
@@ -213,7 +216,7 @@ const CalendarSettingsButton: React.FC = () => {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        ⚙️
+        <Icon name="settings" size={20} className={"settings-btn" + (open ? " settings-btn--active" : "")} />
       </button>
       {open && <CalendarSettingsPopup />}
     </div>

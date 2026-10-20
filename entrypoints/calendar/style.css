@@ -144,6 +144,13 @@
   align-self: center;
 }
 
+.cal-settings-anchor .settings-btn {
+  transition: rotate var(--transition-fast);
+}
+.cal-settings-anchor .settings-btn--active {
+  rotate: 90deg;
+}
+
 .cal-settings-popup {
   position: absolute;
   top: calc(100% + var(--space-2));
@@ -171,6 +178,9 @@
 }
 
 .cal-settings-popup__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-secondary);
