@@ -2,11 +2,13 @@ import { browser, type Browser } from 'wxt/browser';
 import {
   clearHistories,
   createRecord,
+  getHistoriesByUrl,
   joinUrl,
   listHistories,
   removeHistoriesByUrl,
   saveHistories,
   saveHistory,
+  updateHistory,
   type HistoryRecord,
 } from '../db';
 
@@ -26,6 +28,78 @@ export function registerHistoryListeners() {
 
   browser.history.onVisitRemoved.addListener((removed) => {
     void handleVisitRemoved(removed);
+  });
+
+  // 方案 1：浏览器确定/更新标题时会触发 onTitleChanged（Chrome 88+ / Firefox 78+）
+  const onTitleChanged = (browser.history as any).onTitleChanged;
+  onTitleChanged?.addListener((info: { url: string; title: string }) => {
+    void backfillTitle(info.url, info.title);
+  });
+
+  // 方案 2：兜底，标签页标题就绪时补写（某些内核不触发 onTitleChanged 或触发过早）
+  browser.tabs.onUpdated.addListener((_tabId, changeInfo, tab) => {
+    const title = changeInfo.title ?? (changeInfo.status === 'complete' ? tab.title : undefined);
+    if (title && tab.url) void backfillTitle(tab.url, title);
+  });
+}
+
+/** 补写标题时允许回溯的时间窗口（ms）：只修补最近这段时间内、标题为空的记录 */
+const TITLE_BACKFILL_WINDOW = 5 * 60 * 1000;
+
+/**
+ * 把 url 对应的、标题为空（或等于 url）的近期记录补上标题。
+ * 幂等：已有标题的记录不会被覆盖。
+ */
+export async function backfillTitle(url: string, title?: string) {
+  const t = title?.trim();
+  if (!url || !t) return;
+
+  try {
+    const records = await getHistoriesByUrl(url);
+    const now = Date.now();
+    const targets = records.filter(
+      (r) =>
+        now - r.visitTime <= TITLE_BACKFILL_WINDOW &&
+        (!r.title || r.title === url || r.title === joinUrl(r)),
+    );
+    for (const r of targets) {
+      await updateHistory(String(r.id), { title: t });
+    }
+  } catch (err) {
+    console.error('[history] 补写标题失败', url, err);
+  }
+}
+
+/** 从已打开的标签页里找该 url 的标题（onVisited 时标题常常还没解析出来） */
+async function titleFromTabs(url: string): Promise<string | undefined> {
+  try {
+    // 不用 query({ url })：url 是 match pattern，带 query/hash 的地址匹配不可靠
+    const tabs = await browser.tabs.query({});
+    const hit = tabs.find((t) => t.url === url && t.title && t.title !== url);
+    return hit?.title ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** 向 history API 反查标题（浏览器自身的标题通常稍后才写入） */
+async function titleFromHistory(url: string): Promise<string | undefined> {
+  try {
+    const items = await browser.history.search({ text: url, startTime: 0, maxResults: 20 });
+    const hit = items.find((i) => i.url === url && i.title);
+    return hit?.title ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** 延迟重试补标题（MV3 service worker 可能被回收，所以只做短时重试，长链路交给事件监听） */
+function scheduleTitleRetry(url: string, delays = [500, 1500, 4000]) {
+  delays.forEach((ms) => {
+    setTimeout(async () => {
+      const title = (await titleFromTabs(url)) ?? (await titleFromHistory(url));
+      if (title) await backfillTitle(url, title);
+    }, ms);
   });
 }
 
@@ -47,9 +121,14 @@ export async function handleVisited(item: Browser.history.HistoryItem) {
     const visits = await browser.history.getVisits({ url: item.url }).catch(() => []);
     const last = visits.length ? visits[visits.length - 1] : undefined;
 
+    // onVisited 回调里 title 往往还是空的（文档尚未解析出 <title>）：
+    // 先尝试从当前标签页取，再退回 history.search，最后交给延迟重试 / onTitleChanged 补写。
+    const title =
+      item.title?.trim() || (await titleFromTabs(item.url)) || (await titleFromHistory(item.url));
+
     const record: HistoryRecord = createRecord({
       url: item.url,
-      title: item.title,
+      title,
       visitTime: last?.visitTime ?? item.lastVisitTime ?? Date.now(),
       source: 'local',
       visitId: last?.visitId,
@@ -58,6 +137,8 @@ export async function handleVisited(item: Browser.history.HistoryItem) {
     });
 
     await saveHistory(record);
+
+    if (!record.title) scheduleTitleRetry(item.url);
   } catch (err) {
     console.error('[history] onVisited 写入失败', item.url, err);
   }
